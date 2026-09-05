@@ -24,6 +24,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+The project targets Node.js 24 and keeps the Next.js application at the repository root, so these commands run directly after cloning the repository.
+
 ## Environment
 
 The site works without external credentials: catalog data uses the typed local seed and the contact form offers an email-client fallback. For production, fill in `.env.local` using `.env.example`:
@@ -34,6 +36,12 @@ The site works without external credentials: catalog data uses the typed local s
 - the fixed Ennearock team destination email
 
 Never expose the service role or email-provider key through a `NEXT_PUBLIC_` variable.
+
+## Deployment
+
+Import the repository directly into a Next.js-capable host such as Vercel or Netlify. The application is at the repository root, so leave the provider root directory and output directory at their defaults. Add the values from `.env.example` in the provider's environment-variable settings, then deploy the `main` branch.
+
+GitHub Pages is not a compatible target for the complete application because the contact and product APIs require a server runtime.
 
 ## Database
 
