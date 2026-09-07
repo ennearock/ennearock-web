@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { Container, Eyebrow } from "@/components/ui";
 import { getProductBySlug } from "@/data/catalog";
+import { getSiteContent } from "@/lib/content/queries";
 
 export const metadata: Metadata = {
   title: "Start a project",
@@ -19,7 +20,10 @@ type ContactPageProps = {
 };
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
-  const { interest: rawInterest } = await searchParams;
+  const [{ interest: rawInterest }, { general }] = await Promise.all([
+    searchParams,
+    getSiteContent(),
+  ]);
   const interestSlug = Array.isArray(rawInterest) ? rawInterest[0] : rawInterest;
   const interest = interestSlug ? getProductBySlug(interestSlug) : undefined;
 
@@ -61,9 +65,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </p>
                 <a
                   className="mt-5 inline-flex items-center gap-3 border-b border-white/30 pb-2 text-lg font-semibold tracking-[-0.025em] transition hover:border-lime hover:text-lime"
-                  href="mailto:hello@ennearock.com"
+                  href={`mailto:${general.contactEmail}`}
                 >
-                  hello@ennearock.com <Mail size={17} />
+                  {general.contactEmail} <Mail size={17} />
                 </a>
 
                 <div className="mt-10 space-y-0 border-y border-white/15">
@@ -79,7 +83,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   <div className="flex gap-4 py-5">
                     <Globe className="mt-0.5 shrink-0 text-lime" size={19} />
                     <div>
-                      <p className="text-xs font-semibold">Paris · Working worldwide</p>
+                      <p className="text-xs font-semibold">{general.location}</p>
                       <p className="mt-1 text-[10px] leading-5 text-white/55">
                         Remote-friendly collaboration across time zones.
                       </p>
@@ -118,6 +122,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             </aside>
 
             <ContactForm
+              contactEmail={general.contactEmail}
               interestName={interest?.name}
               interestSlug={interest?.slug}
             />

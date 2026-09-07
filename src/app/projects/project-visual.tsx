@@ -1,7 +1,8 @@
-import type { Project } from "@/data/catalog";
+/* eslint-disable @next/next/no-img-element -- Admin cover URLs are user-configured and can use any HTTPS host. */
+import type { PortfolioProject } from "@/lib/content";
 
 interface ProjectVisualProps {
-  project: Project;
+  project: PortfolioProject;
   size?: "card" | "hero";
 }
 
@@ -11,6 +12,20 @@ export function ProjectVisual({ project, size = "card" }: ProjectVisualProps) {
     size === "hero"
       ? "min-h-[30rem] sm:min-h-[38rem] lg:min-h-[46rem]"
       : "aspect-[4/3] min-h-[20rem]";
+
+  if (project.coverImageUrl) {
+    return (
+      <div className={`relative isolate w-full overflow-hidden bg-[#1d211c] ${sizeClass}`}>
+        <img
+          alt={`${project.name} project cover`}
+          className="absolute inset-0 h-full w-full object-cover"
+          loading={size === "hero" ? "eager" : "lazy"}
+          src={project.coverImageUrl}
+        />
+        <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
+      </div>
+    );
+  }
 
   return (
     <div

@@ -2,13 +2,14 @@ import type { NextRequest } from "next/server";
 
 import {
   categories,
-  filterProducts,
+  filterProductList,
   productKinds,
   productStatuses,
   type ProductCategory,
   type ProductKind,
   type ProductStatus,
 } from "@/data/catalog";
+import { getPublishedProducts } from "@/lib/content/queries";
 
 const responseHeaders = {
   "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=86400",
@@ -35,7 +36,7 @@ function badRequest(message: string) {
   );
 }
 
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const query = searchParams.get("q")?.trim() || undefined;
   const rawCategory = searchParams.get("category")?.trim();
@@ -71,7 +72,8 @@ export function GET(request: NextRequest) {
     rawStatus && isProductStatus(rawStatus) ? rawStatus : undefined;
   const featured =
     rawFeatured === undefined ? undefined : rawFeatured === "true";
-  const matches = filterProducts({
+  const products = await getPublishedProducts();
+  const matches = filterProductList(products, {
     query,
     category,
     kind,

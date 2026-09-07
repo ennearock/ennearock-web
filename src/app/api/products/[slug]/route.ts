@@ -1,4 +1,4 @@
-import { getProductBySlug } from "@/data/catalog";
+import { getPublishedProductBySlug } from "@/lib/content/queries";
 
 const responseHeaders = {
   "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=86400",
@@ -9,7 +9,7 @@ export async function GET(
   context: RouteContext<"/api/products/[slug]">,
 ) {
   const { slug } = await context.params;
-  const product = getProductBySlug(slug);
+  const product = await getPublishedProductBySlug(slug);
 
   if (!product) {
     return Response.json(

@@ -1,4 +1,9 @@
 import { products, type Project } from "@/data/catalog";
+import {
+  getPublishedProjectBySlug,
+  getPublishedProjects,
+} from "@/lib/content/queries";
+import type { PortfolioProject } from "@/lib/content";
 
 export interface ProjectStory {
   client: string;
@@ -107,3 +112,12 @@ export function getProjectStory(slug: string): ProjectStory {
   return stories[slug] ?? fallbackStory;
 }
 
+export async function getPublicProjects(): Promise<PortfolioProject[]> {
+  return getPublishedProjects();
+}
+
+export async function getPublicProject(
+  slug: string,
+): Promise<PortfolioProject | undefined> {
+  return getPublishedProjectBySlug(slug);
+}

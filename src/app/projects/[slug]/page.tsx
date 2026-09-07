@@ -3,9 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Check } from "@/components/icons";
 import {
-  getProject,
-  getProjectStory,
-  projects,
+  getPublicProject,
+  getPublicProjects,
 } from "../project-data";
 import { ProjectVisual } from "../project-visual";
 
@@ -13,9 +12,8 @@ type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getPublicProjects();
   return projects.map((project) => ({ slug: project.slug }));
 }
 
@@ -23,7 +21,7 @@ export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getPublicProject(slug);
 
   if (!project) {
     return {
@@ -32,27 +30,34 @@ export async function generateMetadata({
   }
 
   return {
-    title: project.name,
-    description: project.description,
+    title: project.seoTitle ?? project.name,
+    description: project.seoDescription ?? project.description,
     openGraph: {
-      title: project.name + " — Ennearock case study",
-      description: project.description,
+      title: project.seoTitle ?? project.name + " — Ennearock case study",
+      description: project.seoDescription ?? project.description,
       type: "article",
+      images: project.coverImageUrl ? [{ url: project.coverImageUrl }] : undefined,
     },
   };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const [project, projects] = await Promise.all([
+    getPublicProject(slug),
+    getPublicProjects(),
+  ]);
 
   if (!project) {
     notFound();
   }
 
-  const story = getProjectStory(project.slug);
+  const story = project.story;
   const currentIndex = projects.findIndex((item) => item.id === project.id);
-  const nextProject = projects[(currentIndex + 1) % projects.length];
+  const nextProject =
+    projects.length > 1
+      ? projects[(currentIndex + 1) % projects.length]
+      : undefined;
 
   return (
     <main id="main-content">
@@ -90,9 +95,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             <dl className="mt-14 grid border-y border-[#c9c6bc] sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
               {[
-                ["Client", story.client],
-                ["Engagement", story.engagement],
-                ["Timeline", story.duration],
+                ["Client", project.client],
+                ["Engagement", project.engagement],
+                ["Timeline", project.duration],
                 ["Launch", project.updatedAt.slice(0, 4)],
               ].map(([label, value], index) => (
                 <div

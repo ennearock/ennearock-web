@@ -18,6 +18,7 @@ type ContactApiResponse = {
 };
 
 type ContactFormProps = {
+  contactEmail?: string;
   interestName?: string;
   interestSlug?: string;
 };
@@ -26,7 +27,11 @@ const inputClassName =
   "mt-2 min-h-12 w-full rounded-none border border-[#cbc8bd] bg-[#fffefa] px-4 text-sm text-foreground outline-none transition placeholder:text-[#989990] focus:border-[var(--violet)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--violet)_16%,transparent)]";
 const labelClassName = "text-xs font-semibold text-foreground";
 
-export function ContactForm({ interestName, interestSlug }: ContactFormProps) {
+export function ContactForm({
+  contactEmail = "hello@ennearock.com",
+  interestName,
+  interestSlug,
+}: ContactFormProps) {
   const [submission, setSubmission] = useState<SubmissionState>({ status: "idle" });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -79,7 +84,7 @@ export function ContactForm({ interestName, interestSlug }: ContactFormProps) {
       setSubmission({
         status: "error",
         message:
-          "We couldn’t reach the server. Please try again or email hello@ennearock.com.",
+          `We couldn’t reach the server. Please try again or email ${contactEmail}.`,
       });
     }
   }
@@ -130,7 +135,7 @@ export function ContactForm({ interestName, interestSlug }: ContactFormProps) {
               className="mt-3 inline-flex items-center gap-2 border-b border-current pb-0.5 text-xs font-semibold"
               href={submission.mailto}
             >
-              Open email to hello@ennearock.com <ArrowRight size={14} />
+              Open email to {contactEmail} <ArrowRight size={14} />
             </a>
           </div>
         ) : null}

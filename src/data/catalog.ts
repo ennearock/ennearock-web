@@ -310,10 +310,17 @@ export function getProductBySlug(slug: string): Product | undefined {
 }
 
 export function filterProducts(filters: CatalogFilters = {}): Product[] {
+  return filterProductList(products, filters);
+}
+
+export function filterProductList<T extends Product>(
+  items: T[],
+  filters: CatalogFilters = {},
+): T[] {
   const query = filters.query?.trim().toLocaleLowerCase();
   const category = filters.category?.trim().toLocaleLowerCase();
 
-  return products.filter((product) => {
+  return items.filter((product) => {
     if (filters.kind && product.kind !== filters.kind) return false;
     if (filters.featured !== undefined && product.featured !== filters.featured) {
       return false;

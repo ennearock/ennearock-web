@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/data/catalog";
+import { getPublishedProducts } from "@/lib/content/queries";
 
 const baseUrl = "https://ennearock.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getPublishedProducts();
   const publicPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: "2026-08-30", changeFrequency: "weekly", priority: 1 },
     { url: baseUrl + "/templates", lastModified: "2026-08-30", changeFrequency: "weekly", priority: 0.9 },

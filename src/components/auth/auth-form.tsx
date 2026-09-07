@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useActionState, useState } from "react";
+
+import {
+  loginAction,
+  signupAction,
+  type AuthActionState,
+} from "@/app/(auth)/actions";
 
 const inputClass =
   "mt-2 h-12 w-full rounded-[13px] border border-[#dcd9cf] bg-white px-4 text-[14px] text-[#11130f] outline-none transition placeholder:text-[#aaa9a2] hover:border-[#c7c4ba] focus:border-[#61734f] focus:ring-4 focus:ring-[#c9f26b]/20";
@@ -19,22 +24,29 @@ function EyeIcon({ open }: { open: boolean }) {
   );
 }
 
-export function AuthForm({ mode }: { mode: "login" | "signup" }) {
-  const router = useRouter();
+const initialAuthState: AuthActionState = { message: "", status: "idle" };
+
+export function AuthForm({
+  initialError,
+  mode,
+  nextPath = "/dashboard",
+}: {
+  initialError?: string;
+  mode: "login" | "signup";
+  nextPath?: string;
+}) {
   const isSignup = mode === "signup";
   const [showPassword, setShowPassword] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
   const [notice, setNotice] = useState("");
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSubmitting(true);
-    setNotice("");
-    window.setTimeout(() => router.push("/dashboard"), 700);
-  }
+  const [state, formAction, pending] = useActionState(
+    isSignup ? signupAction : loginAction,
+    initialError
+      ? { message: initialError, status: "error" as const }
+      : initialAuthState,
+  );
 
   function handleSocial(provider: string) {
-    setNotice(`${provider} sign-in is ready to connect when authentication is configured.`);
+    setNotice(`${provider} sign-in is not enabled yet. Use email and password.`);
   }
 
   return (
@@ -89,30 +101,44 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         </div>
       ) : null}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      {state.message ? (
+        <div
+          className={`mb-5 rounded-xl border px-3.5 py-3 text-xs leading-5 ${
+            state.status === "success"
+              ? "border-[#bcd985] bg-[#eff8dc] text-[#395020]"
+              : "border-[#dca8a1] bg-[#fff0ed] text-[#813c31]"
+          }`}
+          role={state.status === "error" ? "alert" : "status"}
+        >
+          {state.message}
+        </div>
+      ) : null}
+
+      <form action={formAction} className="space-y-4">
+        <input name="next" type="hidden" value={nextPath} />
         {isSignup ? (
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="text-xs font-semibold text-[#30332e]">
               Full name
-              <input className={inputClass} name="name" autoComplete="name" placeholder="Alex Morgan" required />
+              <input className={inputClass} name="name" autoComplete="name" placeholder="Alex Morgan" minLength={2} maxLength={80} required />
             </label>
             <label className="text-xs font-semibold text-[#30332e]">
               Studio name
-              <input className={inputClass} name="organization" autoComplete="organization" placeholder="Acme Studio" required />
+              <input className={inputClass} name="organization" autoComplete="organization" placeholder="Acme Studio" minLength={2} maxLength={120} required />
             </label>
           </div>
         ) : null}
 
         <label className="block text-xs font-semibold text-[#30332e]">
           Work email
-          <input className={inputClass} type="email" name="email" autoComplete="email" placeholder="you@studio.com" required />
+          <input className={inputClass} type="email" name="email" autoComplete="email" placeholder="you@studio.com" maxLength={254} required />
         </label>
 
         <label className="block text-xs font-semibold text-[#30332e]">
           <span className="flex items-center justify-between">
             Password
             {!isSignup ? (
-              <Link href="/contact" className="font-medium text-[#5d6e48] hover:text-[#11130f]">Forgot password?</Link>
+              <Link href="/contact" className="font-medium text-[#5d6e48] hover:text-[#11130f]">Need sign-in help?</Link>
             ) : null}
           </span>
           <span className="relative block">
@@ -123,6 +149,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               autoComplete={isSignup ? "new-password" : "current-password"}
               placeholder={isSignup ? "Minimum 8 characters" : "Enter your password"}
               minLength={8}
+              maxLength={128}
               required
             />
             <button
@@ -138,23 +165,18 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
 
         {isSignup ? (
           <label className="flex cursor-pointer items-start gap-3 pt-1 text-xs leading-5 text-[#6d7169]">
-            <input type="checkbox" required className="mt-0.5 h-4 w-4 rounded border-[#c7c4ba] accent-[#11130f]" />
+            <input name="terms" type="checkbox" value="accepted" required className="mt-0.5 h-4 w-4 rounded border-[#c7c4ba] accent-[#11130f]" />
             <span>I agree to the <Link href="/terms" className="font-medium text-[#11130f] underline underline-offset-2">Terms</Link> and <Link href="/privacy" className="font-medium text-[#11130f] underline underline-offset-2">Privacy Policy</Link>.</span>
           </label>
-        ) : (
-          <label className="flex cursor-pointer items-center gap-2.5 pt-1 text-xs text-[#6d7169]">
-            <input type="checkbox" className="h-4 w-4 rounded border-[#c7c4ba] accent-[#11130f]" />
-            Keep me signed in for 30 days
-          </label>
-        )}
+        ) : null}
 
         <button
           type="submit"
-          disabled={submitting}
+          disabled={pending}
           className="group mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[13px] bg-[#11130f] px-5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(17,19,15,.14)] transition hover:-translate-y-0.5 hover:bg-[#23271f] disabled:cursor-wait disabled:opacity-70 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9f26b]/50"
         >
-          {submitting ? (
-            <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> Preparing workspace…</>
+          {pending ? (
+            <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> {isSignup ? "Creating account…" : "Signing in…"}</>
           ) : (
             <>{isSignup ? "Create my workspace" : "Continue to workspace"}<span className="transition-transform group-hover:translate-x-1">→</span></>
           )}
@@ -162,9 +184,9 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       </form>
 
       {isSignup ? (
-        <p className="mt-5 text-center text-[11px] leading-5 text-[#8a8d85]">Demo mode: preview account creation without saving credentials.</p>
+        <p className="mt-5 text-center text-[11px] leading-5 text-[#8a8d85]">Email confirmation may be required before your first sign-in.</p>
       ) : (
-        <p className="mt-5 text-center text-[11px] leading-5 text-[#8a8d85]">Demo mode: use any valid email and an 8-character password.</p>
+        <p className="mt-5 text-center text-[11px] leading-5 text-[#8a8d85]">Admin access is limited to authorized Ennearock accounts.</p>
       )}
     </div>
   );

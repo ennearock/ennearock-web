@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "@/components/icons";
-import { projects } from "./project-data";
+import { getPublicProjects } from "./project-data";
 import { ProjectVisual } from "./project-visual";
 
 export const metadata: Metadata = {
@@ -15,7 +15,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getPublicProjects();
+
   return (
     <main id="main-content">
       <section className="border-b border-[#d4d0c5] bg-background">
@@ -208,4 +210,3 @@ export default function ProjectsPage() {
     </main>
   );
 }
-

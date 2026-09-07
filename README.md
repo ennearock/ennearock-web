@@ -9,8 +9,8 @@ A production-minded SaaS and web-studio starter built with Next.js 16, React 19,
 - `/projects` and `/projects/[slug]` — client work and case studies
 - `/products` — unified template/project product database
 - `/contact` — validated inquiry form with email delivery or safe fallback
-- `/login` and `/signup` — polished demo authentication flows
-- `/dashboard/*` — overview, projects, templates, billing, and settings
+- `/login` and `/signup` — Supabase email/password authentication flows
+- `/dashboard/*` — protected admin workspace, homepage editor, and portfolio manager
 - `/api/products` and `/api/products/[slug]` — filterable catalog API
 - `/api/contact` — contact delivery endpoint
 
@@ -28,14 +28,17 @@ The project targets Node.js 24 and keeps the Next.js application at the reposito
 
 ## Environment
 
-The site works without external credentials: catalog data uses the typed local seed and the contact form offers an email-client fallback. For production, fill in `.env.local` using `.env.example`:
+The public site works without external credentials by falling back to typed local content, and the contact form offers an email-client fallback. Authentication and persistent admin editing require Supabase. Fill in `.env.local` using `.env.example`:
 
 - Supabase URL and publishable key for persistent auth/data
-- server-only Supabase service role key for trusted contact writes
+- optional server-only Supabase service role key for trusted contact writes
+- optional comma-separated `ADMIN_EMAILS` route-access fallback
 - Resend API key and verified sender for contact delivery
 - the fixed Ennearock team destination email
 
 Never expose the service role or email-provider key through a `NEXT_PUBLIC_` variable.
+
+The bundled public-content fallback is an availability safeguard: it is used when Supabase is not configured, the schema is not installed, or a public read cannot complete. This keeps the marketing site online during setup or a provider interruption, but it can briefly show the bundled starter catalog until the connection recovers.
 
 ## Deployment
 
@@ -45,7 +48,34 @@ GitHub Pages is not a compatible target for the complete application because the
 
 ## Database
 
-`supabase/migrations/20260830000100_initial_saas_catalog.sql` defines profiles, products, user projects, contact inquiries, indexes, triggers, grants, row-level security policies, and the initial catalog seed. Apply it through the Supabase CLI or dashboard after creating a project.
+Apply the SQL migrations in timestamp order through the Supabase CLI or dashboard after creating a project:
+
+- `20260830000100_initial_saas_catalog.sql` creates profiles, products, user projects, inquiries, and the initial catalog.
+- `20260906000100_admin_content.sql` adds admin roles, editable site content, portfolio fields, the media bucket, and admin-only RLS policies.
+
+The authenticated server client is the default for dashboard reads and writes, so database RLS remains the final authorization boundary. The service-role client is optional and must only be used after an independent server-side admin check.
+
+## Admin setup
+
+1. Set `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+2. Apply both migrations, then create and confirm the intended Supabase Auth user.
+3. Copy that user's UUID from Auth and provision it with trusted SQL:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = '00000000-0000-0000-0000-000000000000';
+```
+
+Use the real UUID, not an email address. The `role` column is intentionally excluded from user-editable grants. `ADMIN_EMAILS` and `CONTACT_TEAM_EMAIL` are accepted as server-side route-access fallbacks, but they do not replace the database role: RLS-protected content writes still require `profiles.role = 'admin'`.
+
+In Supabase Auth URL configuration, add local and production `/auth/confirm` redirect URLs. For server-side token-hash confirmation, set the Confirm signup email template link to:
+
+```text
+{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/dashboard
+```
+
+The confirmation endpoint also accepts the PKCE `code` callback. Configure custom SMTP before production use if sign-up confirmation is enabled.
 
 ## Verification
 
@@ -54,4 +84,4 @@ npm run lint
 npm run build
 ```
 
-The login and sign-up pages intentionally run in demo mode until a real authentication provider is configured. Do not treat the client-side demo redirect as an authorization boundary; protect dashboard routes server-side when connecting production auth.
+Proxy performs session refresh and an optimistic dashboard redirect. Every privileged page, data-access function, and Server Action must still call `requireAdmin()`; Proxy and hidden UI are not authorization boundaries.
