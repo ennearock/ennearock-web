@@ -37,17 +37,12 @@ export function AuthForm({
 }) {
   const isSignup = mode === "signup";
   const [showPassword, setShowPassword] = useState(false);
-  const [notice, setNotice] = useState("");
   const [state, formAction, pending] = useActionState(
     isSignup ? signupAction : loginAction,
     initialError
       ? { message: initialError, status: "error" as const }
       : initialAuthState,
   );
-
-  function handleSocial(provider: string) {
-    setNotice(`${provider} sign-in is not enabled yet. Use email and password.`);
-  }
 
   return (
     <div className="w-full">
@@ -65,11 +60,10 @@ export function AuthForm({
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          onClick={() => handleSocial("Google")}
-          className="flex h-11 items-center justify-center gap-2 rounded-[12px] border border-[#dcd9cf] bg-white text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[#bbb9af] hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9f26b]/30"
+      <div>
+        <a
+          href={`/auth/google?from=${mode}&next=${encodeURIComponent(nextPath)}`}
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-[12px] border border-[#dcd9cf] bg-white text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[#bbb9af] hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9f26b]/30"
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
             <path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3Z"/>
@@ -77,16 +71,8 @@ export function AuthForm({
             <path fill="#FBBC05" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.5H3.1a10 10 0 0 0 0 9Z"/>
             <path fill="#EA4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.8A9.7 9.7 0 0 0 3.1 7.5l3.3 2.6C7.2 7.8 9.4 6 12 6Z"/>
           </svg>
-          Google
-        </button>
-        <button
-          type="button"
-          onClick={() => handleSocial("GitHub")}
-          className="flex h-11 items-center justify-center gap-2 rounded-[12px] border border-[#dcd9cf] bg-white text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[#bbb9af] hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9f26b]/30"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.4 1.1 2.9.9.1-.7.4-1.1.7-1.3-2.3-.3-4.6-1.1-4.6-5A3.9 3.9 0 0 1 6.7 9c-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6a3.9 3.9 0 0 1 1.1 2.7c0 3.8-2.3 4.7-4.6 5 .4.3.7 1 .7 2V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
-          GitHub
-        </button>
+          Continue with Google
+        </a>
       </div>
 
       <div className="my-6 flex items-center gap-4">
@@ -94,12 +80,6 @@ export function AuthForm({
         <span className="font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-[#999b94]">or continue with email</span>
         <span className="h-px flex-1 bg-[#dddacf]" />
       </div>
-
-      {notice ? (
-        <div className="mb-5 rounded-xl border border-[#bcd985] bg-[#eff8dc] px-3.5 py-3 text-xs leading-5 text-[#395020]" role="status">
-          {notice}
-        </div>
-      ) : null}
 
       {state.message ? (
         <div

@@ -10,6 +10,11 @@ export async function createClient() {
   const { publishableKey, url } = getSupabasePublicConfig();
 
   return createServerClient(url, publishableKey, {
+    auth: {
+      experimental: {
+        appendPkceFlowIdToRedirects: true,
+      },
+    },
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -29,4 +34,3 @@ export async function createClient() {
 }
 
 export const createServerSupabaseClient = createClient;
-

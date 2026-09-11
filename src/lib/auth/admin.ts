@@ -46,11 +46,19 @@ export const getAdminUser = cache(async (): Promise<AdminUser | null> => {
   }
 
   const claims = claimsData.claims;
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .select("email, full_name, avatar_url, company, role")
     .eq("id", claims.sub)
     .maybeSingle<ProfileRow>();
+
+  if (error) {
+    console.error("[auth:admin] Profile lookup failed", {
+      code: error.code,
+      status: error.code === "PGRST205" ? 503 : null,
+    });
+    throw new Error("Admin profile lookup failed", { cause: error });
+  }
 
   const profile = data ?? null;
   // The allowlist must be matched against the signed Auth claim, never a

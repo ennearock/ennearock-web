@@ -45,6 +45,7 @@ The bundled public-content fallback is an availability safeguard: it is used whe
 Import the repository directly into a Next.js-capable host such as Vercel or Netlify. The application is at the repository root, so leave the provider root directory and output directory at their defaults. Add the values from `.env.example` in the provider's environment-variable settings, then deploy the `main` branch.
 
 GitHub Pages is not a compatible target for the complete application because the contact and product APIs require a server runtime.
+If Vercel is the production host, disable GitHub Pages under **Repository Settings > Pages**. GitHub's generated Pages workflow is otherwise redundant and may emit runtime warnings that cannot be changed from this repository.
 
 ## Database
 
@@ -69,13 +70,33 @@ where id = '00000000-0000-0000-0000-000000000000';
 
 Use the real UUID, not an email address. The `role` column is intentionally excluded from user-editable grants. `ADMIN_EMAILS` and `CONTACT_TEAM_EMAIL` are accepted as server-side route-access fallbacks, but they do not replace the database role: RLS-protected content writes still require `profiles.role = 'admin'`.
 
-In Supabase Auth URL configuration, add local and production `/auth/confirm` redirect URLs. For server-side token-hash confirmation, set the Confirm signup email template link to:
+In Supabase Auth URL configuration, use `https://ennearock-web.vercel.app` as the production Site URL and allow both callback paths for local and production:
+
+```text
+http://localhost:3000/auth/confirm**
+http://localhost:3000/auth/callback**
+https://ennearock-web.vercel.app/auth/confirm
+https://ennearock-web.vercel.app/auth/callback
+```
+
+For server-side token-hash confirmation, set the Confirm signup email template link to:
 
 ```text
 {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/dashboard
 ```
 
-The confirmation endpoint also accepts the PKCE `code` callback. Configure custom SMTP before production use if sign-up confirmation is enabled.
+The confirmation endpoint also accepts a PKCE `code` callback. The local
+entries include wildcards because PKCE adds a per-flow query parameter; the
+production callback shares the configured Site URL origin and can stay exact.
+
+To enable Google sign-in:
+
+1. Create a Web OAuth client in Google Auth Platform.
+2. Add the Supabase callback URL shown on **Supabase > Authentication > Sign In / Providers > Google** as a Google authorized redirect URI. It has the form `https://PROJECT_REF.supabase.co/auth/v1/callback`.
+3. Add the Google client ID and client secret to that Supabase provider and enable it.
+4. Keep the application `/auth/callback` URLs above in Supabase's redirect allow list.
+
+Configure custom SMTP before production email signup. Supabase's built-in sender only delivers to project-team addresses and is limited to two messages per hour; `RESEND_API_KEY` used by the contact form does not configure Supabase Auth email delivery.
 
 ## Verification
 

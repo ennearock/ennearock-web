@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AuthForm } from "@/components/auth/auth-form";
 import { AuthShell } from "@/components/auth/auth-shell";
+import { authPageErrorMessage } from "@/lib/auth/page-errors";
 import { safeDashboardPath } from "@/lib/auth/paths";
 
 export const metadata: Metadata = {
@@ -24,10 +25,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const rawAuthError = Array.isArray(params.authError)
     ? params.authError[0]
     : params.authError;
-  const initialError =
-    rawAuthError === "confirmation"
-      ? "That confirmation link is invalid or has expired. Request a new email and try again."
-      : undefined;
+  const initialError = authPageErrorMessage(rawAuthError);
 
   return (
     <AuthShell mode="login">
