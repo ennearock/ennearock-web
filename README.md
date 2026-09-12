@@ -75,8 +75,8 @@ In Supabase Auth URL configuration, use `https://ennearock-web.vercel.app` as th
 ```text
 http://localhost:3000/auth/confirm**
 http://localhost:3000/auth/callback**
-https://ennearock-web.vercel.app/auth/confirm
-https://ennearock-web.vercel.app/auth/callback
+https://ennearock-web.vercel.app/auth/confirm**
+https://ennearock-web.vercel.app/auth/callback**
 ```
 
 For server-side token-hash confirmation, set the Confirm signup email template link to:
@@ -85,9 +85,10 @@ For server-side token-hash confirmation, set the Confirm signup email template l
 {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/dashboard
 ```
 
-The confirmation endpoint also accepts a PKCE `code` callback. The local
-entries include wildcards because PKCE adds a per-flow query parameter; the
-production callback shares the configured Site URL origin and can stay exact.
+The confirmation endpoint also accepts a PKCE `code` callback. Every callback
+entry includes a wildcard because PKCE adds a per-flow query parameter. Keep
+the production Site URL set to `https://ennearock-web.vercel.app` so an invalid
+or unmatched redirect can never fall back to localhost.
 
 To enable Google sign-in:
 
