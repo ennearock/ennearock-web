@@ -70,13 +70,13 @@ where id = '00000000-0000-0000-0000-000000000000';
 
 Use the real UUID, not an email address. The `role` column is intentionally excluded from user-editable grants. `ADMIN_EMAILS` and `CONTACT_TEAM_EMAIL` are accepted as server-side route-access fallbacks, but they do not replace the database role: RLS-protected content writes still require `profiles.role = 'admin'`.
 
-In Supabase Auth URL configuration, use `https://ennearock-web.vercel.app` as the production Site URL and allow both callback paths for local and production:
+In Supabase Auth URL configuration, use `https://ennearock.com` as the production Site URL and allow both callback paths for local and production:
 
 ```text
 http://localhost:3000/auth/confirm**
 http://localhost:3000/auth/callback**
-https://ennearock-web.vercel.app/auth/confirm**
-https://ennearock-web.vercel.app/auth/callback**
+https://ennearock.com/auth/confirm
+https://ennearock.com/auth/callback
 ```
 
 For server-side token-hash confirmation, set the Confirm signup email template link to:
@@ -85,10 +85,10 @@ For server-side token-hash confirmation, set the Confirm signup email template l
 {{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/dashboard
 ```
 
-The confirmation endpoint also accepts a PKCE `code` callback. Every callback
-entry includes a wildcard because PKCE adds a per-flow query parameter. Keep
-the production Site URL set to `https://ennearock-web.vercel.app` so an invalid
-or unmatched redirect can never fall back to localhost.
+The confirmation endpoint also accepts a PKCE `code` callback. Keep production
+callback entries exact; the local entries retain wildcards for development.
+Keep the production Site URL set to `https://ennearock.com` so an invalid or
+unmatched redirect can never fall back to localhost.
 
 To enable Google sign-in:
 
