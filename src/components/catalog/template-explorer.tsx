@@ -62,7 +62,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
   return (
     <section
       aria-labelledby="template-collection-title"
-      className="bg-[#fffefa] py-20 sm:py-24 lg:py-28"
+      className="bg-[#ffffff] py-20 sm:py-24 lg:py-28"
     >
       <div className="site-container">
         <div className="border-b border-[var(--line)] pb-8">
@@ -90,7 +90,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
                 />
                 <input
                   autoComplete="off"
-                  className="h-12 w-full rounded-full border border-[var(--line)] bg-white pl-11 pr-11 text-sm outline-none transition placeholder:text-[#92948c] focus:border-[var(--violet)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--violet)_18%,transparent)]"
+                  className="h-12 w-full rounded-full border border-[var(--line)] bg-white pl-11 pr-11 text-sm outline-none transition placeholder:text-[#898f9b] focus:border-[var(--focus)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--focus)_18%,transparent)]"
                   id="template-search"
                   maxLength={80}
                   onChange={(event) => setQuery(event.target.value)}
@@ -101,7 +101,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
                 {query ? (
                   <button
                     aria-label="Clear search"
-                    className="absolute right-3 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-lg text-[var(--muted)] transition hover:bg-[#ece9e0] hover:text-foreground"
+                    className="absolute right-3 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-lg text-[var(--muted)] transition hover:bg-[#e9ebef] hover:text-foreground"
                     onClick={() => setQuery("")}
                     type="button"
                   >
@@ -114,7 +114,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
                 Sort templates
               </label>
               <select
-                className="h-12 rounded-full border border-[var(--line)] bg-white px-5 text-sm font-medium outline-none transition focus:border-[var(--violet)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--violet)_18%,transparent)]"
+                className="h-12 rounded-full border border-[var(--line)] bg-white px-5 text-sm font-medium outline-none transition focus:border-[var(--focus)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--focus)_18%,transparent)]"
                 id="template-sort"
                 onChange={(event) => setSort(event.target.value as SortOption)}
                 value={sort}
@@ -168,7 +168,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
           </p>
           {query || category !== "All" ? (
             <button
-              className="border-b border-current pb-0.5 font-semibold text-foreground transition hover:text-[var(--violet)]"
+              className="border-b border-current pb-0.5 font-semibold text-foreground transition hover:text-[var(--focus)]"
               onClick={resetFilters}
               type="button"
             >
@@ -189,7 +189,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
             <span aria-hidden="true" className="hidden" />
           </div>
         ) : (
-          <div className="flex min-h-80 flex-col items-center justify-center border border-dashed border-[#bbb8ae] bg-[#f5f2ea] px-6 text-center">
+          <div className="flex min-h-80 flex-col items-center justify-center border border-dashed border-[#b8bec8] bg-[#f5f6f8] px-6 text-center">
             <span className="mb-5 flex size-12 items-center justify-center rounded-full bg-white text-[var(--muted)] shadow-sm">
               <Search size={20} />
             </span>
@@ -201,7 +201,7 @@ export function TemplateExplorer({ templates }: { templates: Product[] }) {
               to adapt well beyond its starting industry.
             </p>
             <button
-              className="mt-6 rounded-full bg-foreground px-5 py-3 text-xs font-semibold text-white transition hover:bg-[var(--forest)]"
+              className="mt-6 rounded-full bg-foreground px-5 py-3 text-xs font-semibold text-white transition hover:bg-[var(--panel)]"
               onClick={resetFilters}
               type="button"
             >

@@ -5,7 +5,7 @@ import { Icon } from "./icon";
 import type { PortfolioMetric } from "./admin-types";
 
 export const inputClassName =
-  "mt-2 min-h-11 w-full rounded-[11px] border border-[#d9d6cc] bg-white px-3.5 text-xs text-[#11130f] outline-none transition placeholder:text-[#aaa9a2] hover:border-[#c7c4ba] focus:border-[#83985f] focus:ring-4 focus:ring-[#c9f26b]/20 disabled:cursor-not-allowed disabled:bg-[#f1efe8] disabled:text-[#858980]";
+  "mt-2 min-h-11 w-full rounded-[11px] border border-[var(--line)] bg-white px-3.5 text-xs text-ink outline-none transition placeholder:text-[var(--muted)] hover:border-[var(--line)] focus:border-[var(--focus)] focus:ring-4 focus:ring-[var(--focus)]/20 disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-[var(--muted)]";
 
 export function useUnsavedChangesWarning(dirty: boolean) {
   useEffect(() => {
@@ -67,12 +67,12 @@ export function EditorCard({
   aside?: ReactNode;
 }) {
   return (
-    <section className="overflow-hidden rounded-[22px] border border-[#dedbd1] bg-white">
-      <div className="flex items-start justify-between gap-4 border-b border-[#e8e5dd] px-5 py-4 sm:px-7 sm:py-5">
+    <section className="overflow-hidden rounded-[22px] border border-[var(--line)] bg-white">
+      <div className="flex items-start justify-between gap-4 border-b border-[var(--line)] px-5 py-4 sm:px-7 sm:py-5">
         <div>
           <h2 className="text-sm font-semibold tracking-[-0.02em]">{title}</h2>
           {description ? (
-            <p className="mt-1 max-w-2xl text-[10px] leading-5 text-[#898d84]">
+            <p className="mt-1 max-w-2xl text-[10px] leading-5 text-[var(--muted)]">
               {description}
             </p>
           ) : null}
@@ -94,11 +94,11 @@ export function Field({
   children: ReactNode;
 }) {
   return (
-    <label className="block text-[10px] font-semibold text-[#44483f]">
+    <label className="block text-[10px] font-semibold text-ink">
       <span className="flex items-end justify-between gap-4">
         <span>{label}</span>
         {hint ? (
-          <span className="text-right text-[8px] font-normal text-[#999c94]">
+          <span className="text-right text-[8px] font-normal text-[var(--muted)]">
             {hint}
           </span>
         ) : null}
@@ -120,11 +120,11 @@ export function Toggle({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-5 rounded-[14px] border border-[#e2dfd6] bg-[#faf9f5] px-4 py-3.5">
+    <div className="flex items-center justify-between gap-5 rounded-[14px] border border-[var(--line)] bg-background px-4 py-3.5">
       <div>
         <p className="text-[11px] font-semibold">{label}</p>
         {description ? (
-          <p className="mt-1 text-[9px] leading-4 text-[#858980]">{description}</p>
+          <p className="mt-1 text-[9px] leading-4 text-[var(--muted)]">{description}</p>
         ) : null}
       </div>
       <button
@@ -132,7 +132,7 @@ export function Toggle({
         aria-label={label}
         className={
           "relative h-6 w-11 shrink-0 rounded-full transition " +
-          (checked ? "bg-[#789646]" : "bg-[#d4d2ca]")
+          (checked ? "bg-ink" : "bg-surface-muted")
         }
         onClick={() => onChange(!checked)}
         role="switch"
@@ -170,12 +170,12 @@ export function StringListEditor({
     <div className="space-y-2.5">
       {safeValues.map((value, index) => (
         <div className="flex items-center gap-2" key={index}>
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-[#f0eee7] font-mono text-[8px] text-[#858980]">
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[9px] bg-surface-muted font-mono text-[8px] text-[var(--muted)]">
             {String(index + 1).padStart(2, "0")}
           </span>
           {multiline ? (
             <textarea
-              className="min-h-24 min-w-0 flex-1 resize-y rounded-[10px] border border-[#d9d6cc] bg-white px-3 py-2.5 text-xs leading-5 outline-none focus:border-[#83985f] focus:ring-4 focus:ring-[#c9f26b]/20"
+              className="min-h-24 min-w-0 flex-1 resize-y rounded-[10px] border border-[var(--line)] bg-white px-3 py-2.5 text-xs leading-5 outline-none focus:border-[var(--focus)] focus:ring-4 focus:ring-[var(--focus)]/20"
               maxLength={2000}
               onChange={(event) => {
                 const next = [...safeValues];
@@ -187,7 +187,7 @@ export function StringListEditor({
             />
           ) : (
             <input
-              className="h-10 min-w-0 flex-1 rounded-[10px] border border-[#d9d6cc] bg-white px-3 text-xs outline-none focus:border-[#83985f] focus:ring-4 focus:ring-[#c9f26b]/20"
+              className="h-10 min-w-0 flex-1 rounded-[10px] border border-[var(--line)] bg-white px-3 text-xs outline-none focus:border-[var(--focus)] focus:ring-4 focus:ring-[var(--focus)]/20"
               maxLength={180}
               onChange={(event) => {
                 const next = [...safeValues];
@@ -210,7 +210,7 @@ export function StringListEditor({
         </div>
       ))}
       <button
-        className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[#c7c4b9] px-3 text-[9px] font-semibold text-[#687752] hover:border-[#8c9b6d] hover:bg-[#f6f8ef] disabled:cursor-not-allowed disabled:opacity-45"
+        className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[var(--line)] px-3 text-[9px] font-semibold text-ink hover:border-[var(--focus)] hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-45"
         disabled={safeValues.length >= maxItems}
         onClick={() => onChange([...safeValues, ""])}
         type="button"
@@ -236,7 +236,7 @@ export function MetricListEditor({
         <div className="grid grid-cols-[1fr_.65fr_auto] items-center gap-2" key={index}>
           <input
             aria-label={"Metric " + (index + 1) + " label"}
-            className="h-10 min-w-0 rounded-[10px] border border-[#d9d6cc] px-3 text-xs outline-none focus:border-[#83985f]"
+            className="h-10 min-w-0 rounded-[10px] border border-[var(--line)] px-3 text-xs outline-none focus:border-[var(--focus)]"
             maxLength={60}
             onChange={(event) => {
               const next = [...safeValues];
@@ -248,7 +248,7 @@ export function MetricListEditor({
           />
           <input
             aria-label={"Metric " + (index + 1) + " value"}
-            className="h-10 min-w-0 rounded-[10px] border border-[#d9d6cc] px-3 text-xs font-semibold outline-none focus:border-[#83985f]"
+            className="h-10 min-w-0 rounded-[10px] border border-[var(--line)] px-3 text-xs font-semibold outline-none focus:border-[var(--focus)]"
             maxLength={24}
             onChange={(event) => {
               const next = [...safeValues];
@@ -270,7 +270,7 @@ export function MetricListEditor({
         </div>
       ))}
       <button
-        className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[#c7c4b9] px-3 text-[9px] font-semibold text-[#687752] hover:bg-[#f6f8ef] disabled:opacity-45"
+        className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[var(--line)] px-3 text-[9px] font-semibold text-ink hover:bg-surface-muted disabled:opacity-45"
         disabled={safeValues.length >= 4}
         onClick={() => onChange([...safeValues, { label: "", value: "" }])}
         type="button"

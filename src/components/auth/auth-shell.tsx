@@ -12,8 +12,8 @@ export function AuthShell({
   const isSignup = mode === "signup";
 
   return (
-    <main className="min-h-screen bg-[#f5f2ea] text-[#11130f] lg:grid lg:grid-cols-[minmax(420px,0.92fr)_minmax(560px,1.08fr)]">
-      <section className="relative hidden min-h-screen overflow-hidden bg-[#11130f] p-10 text-white lg:flex lg:flex-col xl:p-14">
+    <main className="min-h-screen bg-background text-ink lg:grid lg:grid-cols-[minmax(420px,0.92fr)_minmax(560px,1.08fr)]">
+      <section className="relative hidden min-h-screen overflow-hidden bg-ink p-10 text-white lg:flex lg:flex-col xl:p-14">
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.11]"
           style={{
@@ -22,7 +22,7 @@ export function AuthShell({
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="pointer-events-none absolute -right-32 top-28 h-[420px] w-[420px] rounded-full bg-[#c9f26b]/20 blur-[110px]" />
+        <div className="pointer-events-none absolute -right-32 top-28 h-[420px] w-[420px] rounded-full bg-accent/20 blur-[110px]" />
 
         <Link href="/" className="relative z-10 w-fit" aria-label="Ennearock home">
           <BrandLockup inverse />
@@ -30,7 +30,7 @@ export function AuthShell({
 
         <div className="relative z-10 my-auto max-w-xl py-16">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#c9f26b] shadow-[0_0_12px_#c9f26b]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_rgba(226,229,235,.35)]" />
             Studio operating system
           </div>
           <h1 className="max-w-[620px] text-[48px] font-medium leading-[0.98] tracking-[-0.06em] xl:text-[62px]">
@@ -48,7 +48,7 @@ export function AuthShell({
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">Live project</p>
                 <p className="mt-1.5 text-sm font-medium">Northstar Commerce</p>
               </div>
-              <span className="rounded-full bg-[#c9f26b] px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-[#11130f]">
+              <span className="rounded-full bg-accent px-2.5 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-ink">
                 On track
               </span>
             </div>
@@ -65,7 +65,7 @@ export function AuthShell({
               ))}
             </div>
             <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div className="h-full w-[82%] rounded-full bg-[#c9f26b]" />
+              <div className="h-full w-[82%] rounded-full bg-accent" />
             </div>
           </div>
         </div>
@@ -81,11 +81,11 @@ export function AuthShell({
           <Link href="/" className="shrink-0 lg:hidden" aria-label="Ennearock home">
             <BrandLockup />
           </Link>
-          <p className="text-xs text-[#6d7169] sm:text-sm">
+          <p className="text-xs text-[var(--muted)] sm:text-sm">
             {isSignup ? "Already have a workspace?" : "New to Ennearock?"}{" "}
             <Link
               href={isSignup ? "/login" : "/signup"}
-              className="font-semibold text-[#11130f] underline decoration-[#aeb0a8] underline-offset-4 transition-colors hover:decoration-[#11130f]"
+              className="font-semibold text-ink underline decoration-[var(--line)] underline-offset-4 transition-colors hover:decoration-ink"
             >
               {isSignup ? "Sign in" : "Create account"}
             </Link>
@@ -95,10 +95,10 @@ export function AuthShell({
         <div className="mx-auto flex w-full max-w-[450px] flex-1 items-center py-12 sm:py-16">
           {children}
         </div>
-        <div className="flex justify-center gap-5 pb-2 text-[11px] text-[#898c84] lg:justify-end">
-          <Link href="/contact" className="hover:text-[#11130f]">Help</Link>
-          <Link href="/privacy" className="hover:text-[#11130f]">Privacy</Link>
-          <Link href="/terms" className="hover:text-[#11130f]">Terms</Link>
+        <div className="flex justify-center gap-5 pb-2 text-[11px] text-[var(--muted)] lg:justify-end">
+          <Link href="/contact" className="hover:text-ink">Help</Link>
+          <Link href="/privacy" className="hover:text-ink">Privacy</Link>
+          <Link href="/terms" className="hover:text-ink">Terms</Link>
         </div>
       </section>
     </main>

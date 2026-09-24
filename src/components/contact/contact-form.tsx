@@ -24,7 +24,7 @@ type ContactFormProps = {
 };
 
 const inputClassName =
-  "mt-2 min-h-12 w-full rounded-none border border-[#cbc8bd] bg-[#fffefa] px-4 text-sm text-foreground outline-none transition placeholder:text-[#989990] focus:border-[var(--violet)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--violet)_16%,transparent)]";
+  "mt-2 min-h-12 w-full rounded-none border border-[#c9ced7] bg-[#ffffff] px-4 text-sm text-foreground outline-none transition placeholder:text-[#898f9b] focus:border-[var(--focus)] focus:ring-2 focus:ring-[color-mix(in_srgb,var(--focus)_16%,transparent)]";
 const labelClassName = "text-xs font-semibold text-foreground";
 
 export function ContactForm({
@@ -92,7 +92,7 @@ export function ContactForm({
   const isPending = submission.status === "pending";
 
   return (
-    <div className="bg-white p-6 shadow-[0_24px_70px_rgba(17,20,15,0.08)] sm:p-9 lg:p-12">
+    <div className="bg-white p-6 shadow-[0_24px_70px_rgba(19, 20, 24,0.08)] sm:p-9 lg:p-12">
       <div className="mb-9 flex items-start justify-between gap-5 border-b border-[var(--line)] pb-7">
         <div>
           <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
@@ -102,14 +102,14 @@ export function ContactForm({
             Tell us what you’re building.
           </h2>
         </div>
-        <span className="hidden size-11 shrink-0 items-center justify-center rounded-full bg-lime sm:flex">
+        <span className="hidden size-11 shrink-0 items-center justify-center rounded-full bg-accent sm:flex">
           <Mail size={19} />
         </span>
       </div>
 
       {interestName ? (
-        <div className="mb-7 flex items-center gap-3 border border-[#d5d0c4] bg-[#f4f1e8] px-4 py-3 text-xs">
-          <span className="size-2 shrink-0 rounded-full bg-[var(--violet)]" />
+        <div className="mb-7 flex items-center gap-3 border border-[#c9ced7] bg-[#f5f6f8] px-4 py-3 text-xs">
+          <span className="size-2 shrink-0 rounded-full bg-[var(--focus)]" />
           Asking about <strong>{interestName}</strong>
         </div>
       ) : null}
@@ -281,7 +281,7 @@ export function ContactForm({
             mailing lists, no mystery follow-ups.
           </p>
           <button
-            className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-foreground px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--forest)] disabled:cursor-wait disabled:opacity-65 disabled:hover:translate-y-0"
+            className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-foreground px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--panel)] disabled:cursor-wait disabled:opacity-65 disabled:hover:translate-y-0"
             disabled={isPending}
             type="submit"
           >

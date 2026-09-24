@@ -51,7 +51,7 @@ function slugify(value: string) {
 
 function ProjectPreview({ project }: { project: PortfolioDraft }) {
   return (
-    <div className="overflow-hidden rounded-[18px] border border-[#d8d5cb] bg-white shadow-[0_16px_45px_rgba(41,44,37,.08)]">
+    <div className="overflow-hidden rounded-[18px] border border-[var(--line)] bg-white shadow-[0_16px_45px_rgba(19,20,24,.08)]">
       <div className="relative h-52 overflow-hidden" style={{ backgroundColor: project.accent }}>
         {project.coverImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -66,27 +66,27 @@ function ProjectPreview({ project }: { project: PortfolioDraft }) {
             </span>
           </>
         )}
-        <span className="absolute left-4 top-4 rounded-full bg-[#11130f]/90 px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.1em] text-white">
+        <span className="absolute left-4 top-4 rounded-full bg-ink/90 px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.1em] text-white">
           {project.category || "Category"}
         </span>
       </div>
       <div className="p-5">
-        <p className="font-mono text-[8px] uppercase tracking-[0.13em] text-[#858980]">
+        <p className="font-mono text-[8px] uppercase tracking-[0.13em] text-[var(--muted)]">
           Portfolio preview
         </p>
         <h3 className="mt-3 text-xl font-semibold tracking-[-0.045em]">
           {project.name || "Untitled project"}
         </h3>
-        <p className="mt-2 font-serif text-[15px] italic leading-5 text-[#61645c]">
+        <p className="mt-2 font-serif text-[15px] italic leading-5 text-[var(--muted)]">
           {project.tagline || "Your project tagline will appear here."}
         </p>
-        <div className="mt-5 grid grid-cols-2 border-t border-[#e3e0d7] pt-4">
+        <div className="mt-5 grid grid-cols-2 border-t border-[var(--line)] pt-4">
           {(project.metrics.length ? project.metrics : [{ label: "Outcome", value: "—" }])
             .slice(0, 2)
             .map((metric, index) => (
-              <div className={index ? "border-l border-[#e3e0d7] pl-4" : ""} key={index}>
+              <div className={index ? "border-l border-[var(--line)] pl-4" : ""} key={index}>
                 <p className="font-serif text-2xl tracking-[-0.04em]">{metric.value || "—"}</p>
-                <p className="mt-1 font-mono text-[7px] uppercase tracking-[0.1em] text-[#858980]">
+                <p className="mt-1 font-mono text-[7px] uppercase tracking-[0.1em] text-[var(--muted)]">
                   {metric.label || "Metric"}
                 </p>
               </div>
@@ -196,7 +196,7 @@ export function PortfolioEditor({
         <div className="min-w-0">
           <nav
             aria-label="Project editor sections"
-            className="mb-4 flex gap-1 overflow-x-auto rounded-[14px] border border-[#dedbd1] bg-white p-1.5"
+            className="mb-4 flex gap-1 overflow-x-auto rounded-[14px] border border-[var(--line)] bg-white p-1.5"
           >
             {tabs.map((tab) => (
               <button
@@ -204,8 +204,8 @@ export function PortfolioEditor({
                 className={
                   "flex h-10 shrink-0 items-center gap-2 rounded-[10px] px-3 text-[10px] font-semibold transition sm:flex-1 sm:justify-center " +
                   (activeTab === tab.id
-                    ? "bg-[#11130f] text-white"
-                    : "text-[#72766d] hover:bg-[#f2f0e9] hover:text-[#11130f]")
+                    ? "bg-ink text-white"
+                    : "text-[var(--muted)] hover:bg-surface-muted hover:text-ink")
                 }
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -244,7 +244,7 @@ export function PortfolioEditor({
                   </Field>
                   <Field label="URL slug" hint="lowercase-and-hyphens">
                     <div className="relative">
-                      <span className="pointer-events-none absolute left-3.5 top-[17px] text-[9px] text-[#999c94]">/projects/</span>
+                      <span className="pointer-events-none absolute left-3.5 top-[17px] text-[9px] text-[var(--muted)]">/projects/</span>
                       <input
                         className={inputClassName + " pl-[70px]"}
                         maxLength={80}
@@ -293,7 +293,7 @@ export function PortfolioEditor({
                   <Field label="Accent color">
                     <span className="relative block">
                       <input className={inputClassName + " pr-12 font-mono uppercase"} maxLength={7} onChange={(event) => update("accent", event.target.value)} pattern="#[0-9A-Fa-f]{6}" value={project.accent} />
-                      <input aria-label="Pick accent color" className="absolute right-2 top-[15px] h-7 w-8 cursor-pointer rounded border-0 bg-transparent p-0" onChange={(event) => update("accent", event.target.value.toUpperCase())} type="color" value={/^#[0-9A-Fa-f]{6}$/.test(project.accent) ? project.accent : "#7568F8"} />
+                      <input aria-label="Pick accent color" className="absolute right-2 top-[15px] h-7 w-8 cursor-pointer rounded border-0 bg-transparent p-0" onChange={(event) => update("accent", event.target.value.toUpperCase())} type="color" value={/^#[0-9A-Fa-f]{6}$/.test(project.accent) ? project.accent : "#E2E5EB"} />
                     </span>
                   </Field>
                   <Field label="Display order" hint="Lower appears first">
@@ -368,10 +368,10 @@ export function PortfolioEditor({
               <EditorCard description="Search engines fall back to the project name and summary when these are empty." title="Search preview">
                 <Field label="SEO title" hint={project.seoTitle.length + "/70"}><input className={inputClassName} maxLength={70} onChange={(event) => update("seoTitle", event.target.value)} placeholder={project.name || "Project name · Ennearock"} value={project.seoTitle} /></Field>
                 <Field label="SEO description" hint={project.seoDescription.length + "/180"}><textarea className={inputClassName + " min-h-28 resize-y py-3 leading-5"} maxLength={180} onChange={(event) => update("seoDescription", event.target.value)} placeholder={project.description || "A concise project description for search and social cards."} value={project.seoDescription} /></Field>
-                <div className="rounded-[14px] border border-[#d9d6cc] bg-[#faf9f5] p-4">
+                <div className="rounded-[14px] border border-[var(--line)] bg-background p-4">
                   <p className="text-[10px] text-[#3f6fb1]">ennearock.com › projects › {project.slug || "project"}</p>
                   <p className="mt-1 text-[17px] text-[#263f75]">{project.seoTitle || project.name || "Untitled project"}</p>
-                  <p className="mt-1 line-clamp-2 text-[10px] leading-5 text-[#5f635a]">{project.seoDescription || project.description || "Your project description will appear here."}</p>
+                  <p className="mt-1 line-clamp-2 text-[10px] leading-5 text-[var(--muted)]">{project.seoDescription || project.description || "Your project description will appear here."}</p>
                 </div>
               </EditorCard>
               <EditorCard description="Featured projects are eligible for the Selected Work section on the homepage." title="Homepage placement">
@@ -392,42 +392,42 @@ export function PortfolioEditor({
 
         <aside className="space-y-4 xl:sticky xl:top-[90px] xl:self-start">
           <ProjectPreview project={project} />
-          <section className="rounded-[18px] border border-[#dedbd1] bg-white p-5">
+          <section className="rounded-[18px] border border-[var(--line)] bg-white p-5">
             <div className="flex items-center justify-between">
               <p className="text-xs font-semibold">Ready to publish</p>
-              <span className="rounded-full bg-[#f0eee8] px-2 py-1 font-mono text-[8px] text-[#6f736a]">{readyCount}/{readiness.length}</span>
+              <span className="rounded-full bg-[var(--line)] px-2 py-1 font-mono text-[8px] text-[var(--muted)]">{readyCount}/{readiness.length}</span>
             </div>
             <div className="mt-4 space-y-2.5">
               {readiness.map(([ready, label]) => (
                 <div className="flex items-center gap-2.5" key={label}>
-                  <span className={"grid h-5 w-5 place-items-center rounded-full " + (ready ? "bg-[#e4f3c9] text-[#52702f]" : "bg-[#efede7] text-[#a0a39b]")}><Icon className="h-3 w-3" name={ready ? "check" : "clock"} /></span>
-                  <span className={"text-[9px] " + (ready ? "text-[#4b4f47]" : "text-[#969990]")}>{label}</span>
+                  <span className={"grid h-5 w-5 place-items-center rounded-full " + (ready ? "bg-surface-muted text-[#52702f]" : "bg-surface-muted text-[var(--muted)]")}><Icon className="h-3 w-3" name={ready ? "check" : "clock"} /></span>
+                  <span className={"text-[9px] " + (ready ? "text-ink" : "text-[var(--muted)]")}>{label}</span>
                 </div>
               ))}
             </div>
             {project.published ? (
-              <Link className="mt-5 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[#d8d5cb] text-[9px] font-semibold" href={"/projects/" + project.slug} target="_blank">Open live page <Icon className="h-3.5 w-3.5" name="external" /></Link>
+              <Link className="mt-5 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--line)] text-[9px] font-semibold" href={"/projects/" + project.slug} target="_blank">Open live page <Icon className="h-3.5 w-3.5" name="external" /></Link>
             ) : null}
           </section>
         </aside>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#d7d4ca] bg-[#f8f6f0]/95 px-4 py-3 shadow-[0_-12px_40px_rgba(31,34,28,.08)] backdrop-blur-xl lg:left-[276px]">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] bg-background/95 px-4 py-3 shadow-[0_-12px_40px_rgba(19,20,24,.08)] backdrop-blur-xl lg:left-[276px]">
         <div className="mx-auto flex max-w-[1430px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className={"h-2 w-2 rounded-full " + (project.published ? "bg-[#7fa34c]" : "bg-[#c4c2bb]")} />
+              <span className={"h-2 w-2 rounded-full " + (project.published ? "bg-ink" : "bg-[var(--line)]")} />
               <p className="text-[10px] font-semibold">{project.published ? "Published" : "Draft"}{dirty ? " · Unsaved changes" : " · All changes saved"}</p>
             </div>
-            <p aria-live="polite" className={"mt-1 truncate text-[9px] " + (state.status === "error" ? "text-[#9a4f41]" : "text-[#74786f]")}>{coverUploading ? "Uploading the cover…" : pending ? "Saving your changes…" : state.message || "Use Ctrl/⌘ + Enter to submit the current form."}</p>
+            <p aria-live="polite" className={"mt-1 truncate text-[9px] " + (state.status === "error" ? "text-[#9a4f41]" : "text-[var(--muted)]")}>{coverUploading ? "Uploading the cover…" : pending ? "Saving your changes…" : state.message || "Use Ctrl/⌘ + Enter to submit the current form."}</p>
           </div>
           <div className="flex gap-2">
-            <Link className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[#d4d1c7] bg-white px-4 text-[10px] font-semibold" href="/dashboard/portfolio">Back</Link>
-            <button className="h-10 rounded-[10px] border border-[#c8c5ba] bg-white px-4 text-[10px] font-semibold disabled:cursor-wait disabled:opacity-55" disabled={pending} name="intent" type="submit" value="save">{project.published ? "Save changes" : "Save draft"}</button>
+            <Link className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[var(--line)] bg-white px-4 text-[10px] font-semibold" href="/dashboard/portfolio">Back</Link>
+            <button className="h-10 rounded-[10px] border border-[var(--line)] bg-white px-4 text-[10px] font-semibold disabled:cursor-wait disabled:opacity-55" disabled={pending} name="intent" type="submit" value="save">{project.published ? "Save changes" : "Save draft"}</button>
             {project.published ? (
-              <button className="h-10 rounded-[10px] bg-[#5f665a] px-4 text-[10px] font-semibold text-white disabled:opacity-55" disabled={pending} name="intent" type="submit" value="unpublish">Unpublish</button>
+              <button className="h-10 rounded-[10px] bg-[var(--muted)] px-4 text-[10px] font-semibold text-white disabled:opacity-55" disabled={pending} name="intent" type="submit" value="unpublish">Unpublish</button>
             ) : (
-              <button className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-[#11130f] px-4 text-[10px] font-semibold text-white disabled:cursor-wait disabled:opacity-55" disabled={pending} name="intent" type="submit" value="publish"><Icon className="h-3.5 w-3.5" name="arrow-up" /> Publish</button>
+              <button className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-ink px-4 text-[10px] font-semibold text-white disabled:cursor-wait disabled:opacity-55" disabled={pending} name="intent" type="submit" value="publish"><Icon className="h-3.5 w-3.5" name="arrow-up" /> Publish</button>
             )}
           </div>
         </div>

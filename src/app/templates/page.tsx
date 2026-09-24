@@ -23,11 +23,11 @@ export default function TemplatesPage() {
         <section className="relative overflow-hidden border-b border-[var(--line)] bg-background py-20 sm:py-24 lg:py-32">
           <div
             aria-hidden="true"
-            className="absolute -right-28 -top-40 size-[430px] rounded-full border border-[#d6d1c5] sm:size-[560px]"
+            className="absolute -right-28 -top-40 size-[430px] rounded-full border border-[#c9ced7] sm:size-[560px]"
           />
           <div
             aria-hidden="true"
-            className="absolute -right-7 -top-10 size-52 rounded-full bg-lime/70 blur-[1px] sm:size-72"
+            className="absolute -right-7 -top-10 size-52 rounded-full bg-accent/70 blur-[1px] sm:size-72"
           />
           <Container className="relative grid items-end gap-12 lg:grid-cols-[1.25fr_.75fr]">
             <div>
@@ -40,13 +40,13 @@ export default function TemplatesPage() {
                 </span>
               </h1>
             </div>
-            <div className="relative z-10 border-l border-[#bdb9ae] pl-6 lg:mb-2 lg:pl-9">
+            <div className="relative z-10 border-l border-[#b8bec8] pl-6 lg:mb-2 lg:pl-9">
               <p className="max-w-md text-base leading-7 text-[var(--muted)]">
                 Thoughtful design systems, real product flows, and clean code.
                 Choose a strong direction, make it yours, and move from idea to
                 launch in days.
               </p>
-              <dl className="mt-8 grid max-w-md grid-cols-3 border-t border-[#bbb8ae] pt-5">
+              <dl className="mt-8 grid max-w-md grid-cols-3 border-t border-[#b8bec8] pt-5">
                 <div>
                   <dt className="font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--muted)]">
                     Templates
@@ -72,7 +72,7 @@ export default function TemplatesPage() {
 
         <TemplateExplorer templates={templates} />
 
-        <section className="bg-[var(--forest)] py-20 text-white sm:py-24">
+        <section className="bg-[var(--panel)] py-20 text-white sm:py-24">
           <Container>
             <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
               <div>
@@ -92,8 +92,8 @@ export default function TemplatesPage() {
                   ["03", "Accessible interactions", "Keyboard navigation, focus states, and readable UI states are part of the build."],
                   ["04", "A clean handoff", "Documentation and organized source help you launch without reverse engineering."],
                 ].map(([number, title, description]) => (
-                  <article className="bg-[var(--forest)] p-7 sm:p-8" key={number}>
-                    <span className="font-mono text-[9px] text-lime">{number}</span>
+                  <article className="bg-[var(--panel)] p-7 sm:p-8" key={number}>
+                    <span className="font-mono text-[9px] text-accent">{number}</span>
                     <h3 className="mt-9 text-lg font-semibold tracking-[-0.035em]">
                       {title}
                     </h3>

@@ -20,7 +20,7 @@ export default async function HomepageAdminPage() {
         description="Edit the existing Ennearock layout through focused fields, keeping its typography and responsive behavior intact."
         action={
           <Link
-            className="inline-flex h-11 items-center gap-2 rounded-[12px] border border-[#d4d1c7] bg-white px-4 text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[#bdbab0]"
+            className="inline-flex h-11 items-center gap-2 rounded-[12px] border border-[var(--line)] bg-white px-4 text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[var(--line)]"
             href="/"
             target="_blank"
           >

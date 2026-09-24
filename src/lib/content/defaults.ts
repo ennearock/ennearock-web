@@ -46,7 +46,7 @@ export const defaultSiteContent: SiteContent = {
     proofText: "from founders worldwide",
     avatars: ["MA", "JL", "SK", "+8"],
     previewTitle: "Nexa",
-    previewAccent: "#c8f36a",
+    previewAccent: "#b8bec8",
     statusTitle: "Launch ready",
     statusText: "All systems operational",
     growthLabel: "Conversion rate",

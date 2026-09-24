@@ -98,7 +98,7 @@ function SidebarContent({
 
       <div className="mx-4 mt-2 rounded-[17px] border border-white/[0.08] bg-white/[0.045] p-3.5">
         <div className="flex items-center gap-3">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[11px] bg-[#c9f26b] text-[#11130f]">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[11px] bg-accent text-ink">
             <Icon className="h-[17px] w-[17px]" name="globe" />
           </span>
           <div className="min-w-0">
@@ -106,7 +106,7 @@ function SidebarContent({
               Ennearock website
             </p>
             <p className="mt-1 flex items-center gap-1.5 text-[9px] text-white/40">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#c9f26b]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Production workspace
             </p>
           </div>
@@ -129,7 +129,7 @@ function SidebarContent({
                 className={
                   "group flex min-h-12 items-center gap-3 rounded-[12px] px-3 text-[13px] font-medium transition " +
                   (active
-                    ? "bg-[#c9f26b] text-[#11130f]"
+                    ? "bg-accent text-ink"
                     : "text-white/55 hover:bg-white/[0.06] hover:text-white")
                 }
                 href={item.href}
@@ -140,7 +140,7 @@ function SidebarContent({
                   className={
                     "h-[18px] w-[18px] " +
                     (active
-                      ? "text-[#11130f]"
+                      ? "text-ink"
                       : "text-white/40 group-hover:text-white")
                   }
                   name={item.icon}
@@ -169,10 +169,10 @@ function SidebarContent({
           target="_blank"
         >
           <span className="flex items-center justify-between">
-            <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-[#c9f26b] text-[#11130f]">
+            <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-accent text-ink">
               <Icon className="h-4 w-4" name="external" />
             </span>
-            <span className="h-2 w-2 rounded-full bg-[#c9f26b] shadow-[0_0_0_4px_rgba(201,242,107,.1)]" />
+            <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_0_4px_rgba(226,229,235,.1)]" />
           </span>
           <p className="mt-3 text-xs font-semibold text-white">
             View live website
@@ -191,7 +191,7 @@ function SidebarContent({
               src={user.avatarUrl}
             />
           ) : (
-            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#ece6d7] text-xs font-bold text-[#22251f]">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-surface-muted text-xs font-bold text-ink">
               {getInitials(user.name, user.email)}
             </div>
           )}
@@ -243,8 +243,8 @@ export function DashboardShell({
   );
 
   return (
-    <div className="min-h-screen w-full bg-[#f3f1e9] text-[#11130f]">
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[276px] bg-[#11130f] lg:block">
+    <div className="min-h-screen w-full bg-background text-ink">
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-[276px] bg-ink lg:block">
         <SidebarContent
           closeNav={() => setNavOpen(false)}
           logoutAction={logoutAction}
@@ -261,7 +261,7 @@ export function DashboardShell({
             onClick={() => setNavOpen(false)}
             type="button"
           />
-          <aside className="relative h-full w-[min(86vw,310px)] bg-[#11130f] shadow-2xl">
+          <aside className="relative h-full w-[min(86vw,310px)] bg-ink shadow-2xl">
             <SidebarContent
               closeNav={() => setNavOpen(false)}
               logoutAction={logoutAction}
@@ -273,32 +273,32 @@ export function DashboardShell({
       ) : null}
 
       <div className="min-h-screen lg:pl-[276px]">
-        <header className="sticky top-0 z-40 flex h-[70px] items-center border-b border-[#dedbd1] bg-[#f3f1e9]/90 px-4 backdrop-blur-xl sm:px-7 lg:px-9">
+        <header className="sticky top-0 z-40 flex h-[70px] items-center border-b border-[var(--line)] bg-background/90 px-4 backdrop-blur-xl sm:px-7 lg:px-9">
           <button
             aria-label="Open navigation"
-            className="mr-3 grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#d9d6cc] bg-white text-[#35382f] lg:hidden"
+            className="mr-3 grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[var(--line)] bg-white text-ink lg:hidden"
             onClick={() => setNavOpen(true)}
             type="button"
           >
             <Icon className="h-5 w-5" name="menu" />
           </button>
           <div className="hidden min-w-[118px] sm:block">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#8b8f86]">
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--muted)]">
               Website admin
             </p>
-            <p className="mt-0.5 text-xs font-semibold text-[#2a2d27]">
+            <p className="mt-0.5 text-xs font-semibold text-ink">
               {current?.label ?? "Dashboard"}
             </p>
           </div>
 
           <div className="relative mx-auto w-full max-w-[390px] sm:mx-5">
             <Icon
-              className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8f928a]"
+              className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]"
               name="search"
             />
             <input
               aria-label="Search admin sections"
-              className="h-10 w-full rounded-[12px] border border-[#dedbd1] bg-white/75 pl-10 pr-4 text-xs outline-none transition placeholder:text-[#999c94] focus:border-[#8a9d65] focus:bg-white focus:ring-4 focus:ring-[#c9f26b]/20"
+              className="h-10 w-full rounded-[12px] border border-[var(--line)] bg-white/75 pl-10 pr-4 text-xs outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--focus)] focus:bg-white focus:ring-4 focus:ring-[var(--focus)]/20"
               onBlur={() =>
                 window.setTimeout(() => setSearchFocused(false), 120)
               }
@@ -310,22 +310,22 @@ export function DashboardShell({
             />
 
             {searchFocused && query ? (
-              <div className="absolute left-0 right-0 top-[46px] overflow-hidden rounded-[16px] border border-[#d9d6cc] bg-white p-2 shadow-[0_18px_60px_rgba(32,35,29,.14)]">
+              <div className="absolute left-0 right-0 top-[46px] overflow-hidden rounded-[16px] border border-[var(--line)] bg-white p-2 shadow-[0_18px_60px_rgba(19,20,24,.14)]">
                 {filteredSearch.length ? (
                   filteredSearch.map((item) => (
                     <Link
-                      className="flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-[#f4f2eb]"
+                      className="flex items-center justify-between rounded-xl px-3 py-2.5 hover:bg-surface-muted"
                       href={item.href}
                       key={item.href}
                     >
                       <span className="text-xs font-medium">{item.label}</span>
-                      <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#8d9088]">
+                      <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-[var(--muted)]">
                         Open
                       </span>
                     </Link>
                   ))
                 ) : (
-                  <p className="px-3 py-4 text-center text-xs text-[#8d9088]">
+                  <p className="px-3 py-4 text-center text-xs text-[var(--muted)]">
                     No admin section found
                   </p>
                 )}
@@ -335,20 +335,20 @@ export function DashboardShell({
 
           <div className="flex items-center gap-2">
             <Link
-              className="hidden h-10 items-center gap-2 rounded-[11px] bg-[#11130f] px-4 text-xs font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#2a2e25] md:flex"
+              className="hidden h-10 items-center gap-2 rounded-[11px] bg-ink px-4 text-xs font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-panel md:flex"
               href="/dashboard/portfolio/new"
             >
               <Icon className="h-4 w-4" name="plus" /> New project
             </Link>
             <Link
               aria-label="View live website"
-              className="grid h-10 w-10 place-items-center rounded-[11px] border border-[#dedbd1] bg-white/75 text-[#5e6259] hover:bg-white hover:text-[#11130f]"
+              className="grid h-10 w-10 place-items-center rounded-[11px] border border-[var(--line)] bg-white/75 text-[var(--muted)] hover:bg-white hover:text-ink"
               href="/"
               target="_blank"
             >
               <Icon className="h-[18px] w-[18px]" name="external" />
             </Link>
-            <div className="hidden h-10 w-10 place-items-center rounded-full bg-[#dfd8c8] text-[10px] font-bold text-[#30332d] sm:grid">
+            <div className="hidden h-10 w-10 place-items-center rounded-full bg-surface-muted text-[10px] font-bold text-ink sm:grid">
               {getInitials(user.name, user.email)}
             </div>
           </div>

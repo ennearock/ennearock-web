@@ -37,7 +37,7 @@ export default async function PortfolioAdminPage({
         description="Create case studies, control their order, and choose which projects appear on the homepage."
         action={
           <Link
-            className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-[#11130f] px-4 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2e25]"
+            className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-ink px-4 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-panel"
             href="/dashboard/portfolio/new"
           >
             <Icon className="h-4 w-4" name="plus" /> New project
@@ -53,13 +53,13 @@ export default async function PortfolioAdminPage({
           ["Published", String(published).padStart(2, "0"), "Visible on ennearock.com"],
           ["Homepage features", String(featured).padStart(2, "0"), "Marked as selected work"],
         ].map(([label, value, note], index) => (
-          <div className="rounded-[18px] border border-[#dedbd1] bg-white px-5 py-4" key={label}>
+          <div className="rounded-[18px] border border-[var(--line)] bg-white px-5 py-4" key={label}>
             <div className="flex items-start justify-between">
-              <p className="text-[10px] font-medium text-[#74786f]">{label}</p>
-              <span className={"h-2 w-2 rounded-full " + (index === 0 ? "bg-[#a5c45e]" : index === 1 ? "bg-[#7568c5]" : "bg-[#df986a]")} />
+              <p className="text-[10px] font-medium text-[var(--muted)]">{label}</p>
+              <span className={"h-2 w-2 rounded-full " + (index === 0 ? "bg-ink" : index === 1 ? "bg-[var(--muted)]" : "bg-[#a6acb7]")} />
             </div>
             <p className="mt-3 text-2xl font-semibold tracking-[-0.045em]">{value}</p>
-            <p className="mt-1 text-[9px] text-[#969990]">{note}</p>
+            <p className="mt-1 text-[9px] text-[var(--muted)]">{note}</p>
           </div>
         ))}
       </section>

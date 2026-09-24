@@ -56,10 +56,10 @@ export default async function TemplateDetailPage({ params }: TemplateDetailProps
     .slice(0, 3);
   const previewSurface =
     template.theme === "dark"
-      ? "bg-[#263029]"
+      ? "bg-[#292c33]"
       : template.theme === "warm"
-        ? "bg-[#e7d2b7]"
-        : "bg-[#d9e1d7]";
+        ? "bg-[#d7dae0]"
+        : "bg-[#d7dae0]";
 
   return (
     <>
@@ -84,7 +84,7 @@ export default async function TemplateDetailPage({ params }: TemplateDetailProps
             <div>
               <div className="flex flex-wrap gap-2">
                 <Pill>{template.category}</Pill>
-                {template.badge ? <Pill tone="lime">{template.badge}</Pill> : null}
+                {template.badge ? <Pill tone="accent">{template.badge}</Pill> : null}
               </div>
               <h1 className="mt-7 text-[clamp(3.25rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.075em]">
                 {template.name}
@@ -100,7 +100,7 @@ export default async function TemplateDetailPage({ params }: TemplateDetailProps
                 <Button
                   arrow
                   href={`/contact?interest=${encodeURIComponent(template.slug)}`}
-                  variant="lime"
+                  variant="accent"
                 >
                   {isComingSoon ? "Join the waitlist" : `Get it for ${template.priceLabel}`}
                 </Button>
@@ -131,7 +131,7 @@ export default async function TemplateDetailPage({ params }: TemplateDetailProps
           </Container>
         </section>
 
-        <section className="border-y border-[var(--line)] bg-[#fffefa]">
+        <section className="border-y border-[var(--line)] bg-[#ffffff]">
           <Container className="grid grid-cols-2 sm:grid-cols-4">
             {[
               ...(template.metrics ?? []),
@@ -152,7 +152,7 @@ export default async function TemplateDetailPage({ params }: TemplateDetailProps
           </Container>
         </section>
 
-        <section className="bg-[#fffefa] py-20 sm:py-28">
+        <section className="bg-[#ffffff] py-20 sm:py-28">
           <Container className="grid gap-14 lg:grid-cols-[.72fr_1.28fr] lg:gap-24">
             <div>
               <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--muted)]">
@@ -172,7 +172,7 @@ export default async function TemplateDetailPage({ params }: TemplateDetailProps
               <div className="grid gap-px border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2">
                 {template.features.map((feature) => (
                   <div className="flex min-h-32 gap-4 bg-background p-6" key={feature}>
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-lime">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent">
                       <Check size={15} />
                     </span>
                     <p className="pt-1 text-sm font-semibold leading-5">{feature}</p>

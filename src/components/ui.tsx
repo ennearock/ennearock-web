@@ -6,7 +6,7 @@ export function Container({ children, className = "" }: { children: ReactNode; c
   return <div className={`site-container ${className}`}>{children}</div>;
 }
 
-type ButtonProps = { href: string; children: ReactNode; variant?: "ink" | "lime" | "outline" | "ghost" | "white"; className?: string; arrow?: boolean; };
+type ButtonProps = { href: string; children: ReactNode; variant?: "ink" | "accent" | "outline" | "ghost" | "white"; className?: string; arrow?: boolean; };
 
 export function Button({ href, children, variant = "ink", className = "", arrow = false }: ButtonProps) {
   const external = href.startsWith("http") || href.startsWith("mailto:");
@@ -23,6 +23,6 @@ export function SectionHeading({ eyebrow, title, text, align = "left", light = f
   return <div className={`section-heading section-heading-${align} ${light ? "section-heading-light" : ""}`}><Eyebrow light={light}>{eyebrow}</Eyebrow><h2>{title}</h2>{text ? <p>{text}</p> : null}</div>;
 }
 
-export function Pill({ children, tone = "neutral" }: { children: ReactNode; tone?: "neutral" | "lime" | "violet" | "dark" }) {
+export function Pill({ children, tone = "neutral" }: { children: ReactNode; tone?: "neutral" | "accent" | "muted" | "dark" }) {
   return <span className={`pill pill-${tone}`}>{children}</span>;
 }

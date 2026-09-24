@@ -7,7 +7,7 @@ type BrowserPreviewProps = {
   title?: string;
 };
 
-export function BrowserPreview({ accent = "#c8f36a", variant = "saas", compact = false, title = "Preview" }: BrowserPreviewProps) {
+export function BrowserPreview({ accent = "#b8bec8", variant = "saas", compact = false, title = "Preview" }: BrowserPreviewProps) {
   const style = { "--preview-accent": accent } as CSSProperties;
   const normalized = variant.toLowerCase();
 

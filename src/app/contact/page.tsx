@@ -34,11 +34,11 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         <section className="relative overflow-hidden border-b border-[var(--line)] py-20 sm:py-24 lg:py-28">
           <div
             aria-hidden="true"
-            className="absolute -right-48 -top-60 size-[600px] rounded-full border border-[#d1cdc1]"
+            className="absolute -right-48 -top-60 size-[600px] rounded-full border border-[#c9ced7]"
           />
           <div
             aria-hidden="true"
-            className="absolute right-8 top-16 size-28 rounded-full bg-lime sm:right-20 sm:size-40"
+            className="absolute right-8 top-16 size-28 rounded-full bg-accent sm:right-20 sm:size-40"
           />
           <Container className="relative grid gap-12 lg:grid-cols-[1.15fr_.85fr] lg:items-end">
             <div>
@@ -49,7 +49,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <span className="font-serif font-normal italic">We’ll find the way.</span>
               </h1>
             </div>
-            <p className="relative z-10 max-w-lg border-l border-[#bcb8ad] pl-7 text-base leading-7 text-[var(--muted)] lg:mb-2">
+            <p className="relative z-10 max-w-lg border-l border-[#b8bec8] pl-7 text-base leading-7 text-[var(--muted)] lg:mb-2">
               Share the rough version. A senior member of our team will read it,
               ask the useful questions, and come back with a clear next step.
             </p>
@@ -59,12 +59,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         <section className="py-16 sm:py-20 lg:py-28">
           <Container className="grid gap-10 lg:grid-cols-[.62fr_1.38fr] lg:gap-16">
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="bg-[var(--forest)] p-7 text-white sm:p-9">
-                <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-lime">
+              <div className="bg-[var(--panel)] p-7 text-white sm:p-9">
+                <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-accent">
                   Direct line
                 </p>
                 <a
-                  className="mt-5 inline-flex items-center gap-3 border-b border-white/30 pb-2 text-lg font-semibold tracking-[-0.025em] transition hover:border-lime hover:text-lime"
+                  className="mt-5 inline-flex items-center gap-3 border-b border-white/30 pb-2 text-lg font-semibold tracking-[-0.025em] transition hover:border-accent hover:text-accent"
                   href={`mailto:${general.contactEmail}`}
                 >
                   {general.contactEmail} <Mail size={17} />
@@ -72,7 +72,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
                 <div className="mt-10 space-y-0 border-y border-white/15">
                   <div className="flex gap-4 border-b border-white/15 py-5">
-                    <Clock className="mt-0.5 shrink-0 text-lime" size={19} />
+                    <Clock className="mt-0.5 shrink-0 text-accent" size={19} />
                     <div>
                       <p className="text-xs font-semibold">Reply within two business days</p>
                       <p className="mt-1 text-[10px] leading-5 text-white/55">
@@ -81,7 +81,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     </div>
                   </div>
                   <div className="flex gap-4 py-5">
-                    <Globe className="mt-0.5 shrink-0 text-lime" size={19} />
+                    <Globe className="mt-0.5 shrink-0 text-accent" size={19} />
                     <div>
                       <p className="text-xs font-semibold">{general.location}</p>
                       <p className="mt-1 text-[10px] leading-5 text-white/55">
@@ -102,7 +102,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                       ["03", "We meet for a focused 30 minutes"],
                     ].map(([number, label]) => (
                       <li className="flex items-center gap-4 text-xs" key={number}>
-                        <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/25 font-mono text-[8px] text-lime">
+                        <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-white/25 font-mono text-[8px] text-accent">
                           {number}
                         </span>
                         {label}
@@ -129,7 +129,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </Container>
         </section>
 
-        <section className="border-t border-[var(--line)] bg-[#fffefa] py-14">
+        <section className="border-t border-[var(--line)] bg-[#ffffff] py-14">
           <Container className="grid gap-8 text-center sm:grid-cols-3 sm:text-left">
             {[
               ["Small by design", "You work directly with the people doing the thinking and making."],

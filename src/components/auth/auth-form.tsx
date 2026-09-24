@@ -10,7 +10,7 @@ import {
 } from "@/app/(auth)/actions";
 
 const inputClass =
-  "mt-2 h-12 w-full rounded-[13px] border border-[#dcd9cf] bg-white px-4 text-[14px] text-[#11130f] outline-none transition placeholder:text-[#aaa9a2] hover:border-[#c7c4ba] focus:border-[#61734f] focus:ring-4 focus:ring-[#c9f26b]/20";
+  "mt-2 h-12 w-full rounded-[13px] border border-[var(--line)] bg-white px-4 text-[14px] text-ink outline-none transition placeholder:text-[var(--muted)] hover:border-[var(--line)] focus:border-[var(--focus)] focus:ring-4 focus:ring-[var(--focus)]/20";
 
 function EyeIcon({ open }: { open: boolean }) {
   return (
@@ -47,13 +47,13 @@ export function AuthForm({
   return (
     <div className="w-full">
       <div className="mb-8">
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6f795f]">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
           {isSignup ? "Start your workspace" : "Welcome back"}
         </p>
-        <h2 className="mt-3 text-[34px] font-semibold tracking-[-0.055em] text-[#11130f] sm:text-[40px]">
+        <h2 className="mt-3 text-[34px] font-semibold tracking-[-0.055em] text-ink sm:text-[40px]">
           {isSignup ? "Create your account" : "Sign in to Ennearock"}
         </h2>
-        <p className="mt-3 text-sm leading-6 text-[#6c7068]">
+        <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
           {isSignup
             ? "Set up your studio workspace in under two minutes."
             : "Enter your details to access your workspace."}
@@ -63,7 +63,7 @@ export function AuthForm({
       <div>
         <a
           href={`/auth/google?from=${mode}&next=${encodeURIComponent(nextPath)}`}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[12px] border border-[#dcd9cf] bg-white text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[#bbb9af] hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9f26b]/30"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-[12px] border border-[var(--line)] bg-white text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[var(--line)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus)]/30"
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
             <path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3Z"/>
@@ -76,9 +76,9 @@ export function AuthForm({
       </div>
 
       <div className="my-6 flex items-center gap-4">
-        <span className="h-px flex-1 bg-[#dddacf]" />
-        <span className="font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-[#999b94]">or continue with email</span>
-        <span className="h-px flex-1 bg-[#dddacf]" />
+        <span className="h-px flex-1 bg-[var(--line)]" />
+        <span className="font-mono text-[9px] font-medium uppercase tracking-[0.18em] text-[var(--muted)]">or continue with email</span>
+        <span className="h-px flex-1 bg-[var(--line)]" />
       </div>
 
       {state.message ? (
@@ -98,27 +98,27 @@ export function AuthForm({
         <input name="next" type="hidden" value={nextPath} />
         {isSignup ? (
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-xs font-semibold text-[#30332e]">
+            <label className="text-xs font-semibold text-ink">
               Full name
               <input className={inputClass} name="name" autoComplete="name" placeholder="Alex Morgan" minLength={2} maxLength={80} required />
             </label>
-            <label className="text-xs font-semibold text-[#30332e]">
+            <label className="text-xs font-semibold text-ink">
               Studio name
               <input className={inputClass} name="organization" autoComplete="organization" placeholder="Acme Studio" minLength={2} maxLength={120} required />
             </label>
           </div>
         ) : null}
 
-        <label className="block text-xs font-semibold text-[#30332e]">
+        <label className="block text-xs font-semibold text-ink">
           Work email
           <input className={inputClass} type="email" name="email" autoComplete="email" placeholder="you@studio.com" maxLength={254} required />
         </label>
 
-        <label className="block text-xs font-semibold text-[#30332e]">
+        <label className="block text-xs font-semibold text-ink">
           <span className="flex items-center justify-between">
             Password
             {!isSignup ? (
-              <Link href="/contact" className="font-medium text-[#5d6e48] hover:text-[#11130f]">Need sign-in help?</Link>
+              <Link href="/contact" className="font-medium text-ink hover:text-ink">Need sign-in help?</Link>
             ) : null}
           </span>
           <span className="relative block">
@@ -135,7 +135,7 @@ export function AuthForm({
             <button
               type="button"
               onClick={() => setShowPassword((current) => !current)}
-              className="absolute right-1.5 top-[14px] grid h-9 w-9 place-items-center rounded-lg text-[#777a72] transition hover:bg-[#f1efe8] hover:text-[#11130f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#81965b]"
+              className="absolute right-1.5 top-[14px] grid h-9 w-9 place-items-center rounded-lg text-[var(--muted)] transition hover:bg-surface-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus)]"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
               <EyeIcon open={showPassword} />
@@ -144,16 +144,16 @@ export function AuthForm({
         </label>
 
         {isSignup ? (
-          <label className="flex cursor-pointer items-start gap-3 pt-1 text-xs leading-5 text-[#6d7169]">
-            <input name="terms" type="checkbox" value="accepted" required className="mt-0.5 h-4 w-4 rounded border-[#c7c4ba] accent-[#11130f]" />
-            <span>I agree to the <Link href="/terms" className="font-medium text-[#11130f] underline underline-offset-2">Terms</Link> and <Link href="/privacy" className="font-medium text-[#11130f] underline underline-offset-2">Privacy Policy</Link>.</span>
+          <label className="flex cursor-pointer items-start gap-3 pt-1 text-xs leading-5 text-[var(--muted)]">
+            <input name="terms" type="checkbox" value="accepted" required className="mt-0.5 h-4 w-4 rounded border-[var(--line)] accent-ink" />
+            <span>I agree to the <Link href="/terms" className="font-medium text-ink underline underline-offset-2">Terms</Link> and <Link href="/privacy" className="font-medium text-ink underline underline-offset-2">Privacy Policy</Link>.</span>
           </label>
         ) : null}
 
         <button
           type="submit"
           disabled={pending}
-          className="group mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[13px] bg-[#11130f] px-5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(17,19,15,.14)] transition hover:-translate-y-0.5 hover:bg-[#23271f] disabled:cursor-wait disabled:opacity-70 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#c9f26b]/50"
+          className="group mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[13px] bg-ink px-5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(19,20,24,.14)] transition hover:-translate-y-0.5 hover:bg-panel disabled:cursor-wait disabled:opacity-70 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus)]/50"
         >
           {pending ? (
             <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> {isSignup ? "Creating account…" : "Signing in…"}</>
@@ -164,9 +164,9 @@ export function AuthForm({
       </form>
 
       {isSignup ? (
-        <p className="mt-5 text-center text-[11px] leading-5 text-[#8a8d85]">Email confirmation may be required before your first sign-in.</p>
+        <p className="mt-5 text-center text-[11px] leading-5 text-[var(--muted)]">Email confirmation may be required before your first sign-in.</p>
       ) : (
-        <p className="mt-5 text-center text-[11px] leading-5 text-[#8a8d85]">Admin access is limited to authorized Ennearock accounts.</p>
+        <p className="mt-5 text-center text-[11px] leading-5 text-[var(--muted)]">Admin access is limited to authorized Ennearock accounts.</p>
       )}
     </div>
   );

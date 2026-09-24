@@ -117,12 +117,12 @@ export function SiteSettingsEditor({
             <div className="space-y-3">
               {value.socials.map((social, index) => (
                 <div className="grid grid-cols-[.55fr_1fr_auto] items-center gap-2" key={index}>
-                  <input aria-label={"Social link " + (index + 1) + " label"} className="h-10 min-w-0 rounded-[10px] border border-[#d9d6cc] px-3 text-xs outline-none focus:border-[#83985f]" maxLength={80} onChange={(event) => {
+                  <input aria-label={"Social link " + (index + 1) + " label"} className="h-10 min-w-0 rounded-[10px] border border-[var(--line)] px-3 text-xs outline-none focus:border-[var(--focus)]" maxLength={80} onChange={(event) => {
                     const socials = [...value.socials];
                     socials[index] = { ...social, label: event.target.value };
                     update("socials", socials);
                   }} placeholder="LinkedIn" value={social.label} />
-                  <input aria-label={"Social link " + (index + 1) + " URL"} className="h-10 min-w-0 rounded-[10px] border border-[#d9d6cc] px-3 text-xs outline-none focus:border-[#83985f]" maxLength={500} onChange={(event) => {
+                  <input aria-label={"Social link " + (index + 1) + " URL"} className="h-10 min-w-0 rounded-[10px] border border-[var(--line)] px-3 text-xs outline-none focus:border-[var(--focus)]" maxLength={500} onChange={(event) => {
                     const socials = [...value.socials];
                     socials[index] = { ...social, href: event.target.value };
                     update("socials", socials);
@@ -131,30 +131,30 @@ export function SiteSettingsEditor({
                 </div>
               ))}
             </div>
-            <button className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[#c7c4b9] px-3 text-[9px] font-semibold text-[#687752] hover:bg-[#f6f8ef] disabled:opacity-45" disabled={value.socials.length >= 8} onClick={() => update("socials", [...value.socials, { label: "", href: "https://" }])} type="button"><Icon className="h-3.5 w-3.5" name="plus" /> Add social link</button>
+            <button className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[var(--line)] px-3 text-[9px] font-semibold text-ink hover:bg-surface-muted disabled:opacity-45" disabled={value.socials.length >= 8} onClick={() => update("socials", [...value.socials, { label: "", href: "https://" }])} type="button"><Icon className="h-3.5 w-3.5" name="plus" /> Add social link</button>
           </EditorCard>
         </div>
 
         <aside className="space-y-4 xl:sticky xl:top-[90px] xl:self-start">
-          <section className="overflow-hidden rounded-[18px] border border-[#dedbd1] bg-[#151813] p-5 text-white">
+          <section className="overflow-hidden rounded-[18px] border border-[var(--line)] bg-panel p-5 text-white">
             <div className="flex items-center gap-3">
               <BrandLockup inverse name={value.brandName || "ennearock"} />
             </div>
             <p className="mt-7 text-[11px] leading-5 text-white/50">{value.brandDescription || "Your studio description"}</p>
-            <a className="mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-[10px] font-semibold text-[#c9f26b]" href={"mailto:" + value.contactEmail}>{value.contactEmail || "hello@example.com"} <Icon className="h-3.5 w-3.5" name="arrow-right" /></a>
+            <a className="mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-[10px] font-semibold text-accent" href={"mailto:" + value.contactEmail}>{value.contactEmail || "hello@example.com"} <Icon className="h-3.5 w-3.5" name="arrow-right" /></a>
             <div className="mt-7 border-t border-white/10 pt-4"><p className="text-[8px] uppercase tracking-[0.12em] text-white/30">Location</p><p className="mt-2 text-[10px] text-white/70">{value.location || "Working worldwide"}</p></div>
           </section>
-          <section className="rounded-[18px] border border-[#dedbd1] bg-white p-5">
+          <section className="rounded-[18px] border border-[var(--line)] bg-white p-5">
             <p className="text-xs font-semibold">Global content</p>
-            <p className="mt-2 text-[9px] leading-5 text-[#858980]">Updates are shared by the header, footer, and contact touchpoints.</p>
-            <div className="mt-4 border-t border-[#ebe8e0] pt-4"><p className="text-[8px] uppercase tracking-[0.12em] text-[#999c94]">Last database update</p><p className="mt-2 text-[10px] font-medium">{updatedAt ? new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(updatedAt)) : "Using built-in defaults"}</p></div>
-            <Link className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[#d8d5cb] text-[9px] font-semibold" href="/" target="_blank">Open live site <Icon className="h-3.5 w-3.5" name="external" /></Link>
+            <p className="mt-2 text-[9px] leading-5 text-[var(--muted)]">Updates are shared by the header, footer, and contact touchpoints.</p>
+            <div className="mt-4 border-t border-[var(--line)] pt-4"><p className="text-[8px] uppercase tracking-[0.12em] text-[var(--muted)]">Last database update</p><p className="mt-2 text-[10px] font-medium">{updatedAt ? new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(updatedAt)) : "Using built-in defaults"}</p></div>
+            <Link className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--line)] text-[9px] font-semibold" href="/" target="_blank">Open live site <Icon className="h-3.5 w-3.5" name="external" /></Link>
           </section>
         </aside>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#d7d4ca] bg-[#f8f6f0]/95 px-4 py-3 shadow-[0_-12px_40px_rgba(31,34,28,.08)] backdrop-blur-xl lg:left-[276px]">
-        <div className="mx-auto flex max-w-[1430px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div className="min-w-0"><p className="text-[10px] font-semibold">Site settings {dirty ? "have unsaved changes" : "are up to date"}</p><p aria-live="polite" className={"mt-1 truncate text-[9px] " + (state.status === "error" ? "text-[#9a4f41]" : "text-[#74786f]")}>{pending ? "Publishing settings…" : state.message || "Published changes are reflected across the website."}</p></div><div className="flex gap-2"><Link className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[#d4d1c7] bg-white px-4 text-[10px] font-semibold" href="/" target="_blank">View site</Link><button className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-[#11130f] px-5 text-[10px] font-semibold text-white disabled:cursor-wait disabled:opacity-55" disabled={pending} type="submit"><Icon className="h-3.5 w-3.5" name="arrow-up" /> {pending ? "Publishing…" : "Save & publish"}</button></div></div>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] bg-background/95 px-4 py-3 shadow-[0_-12px_40px_rgba(19,20,24,.08)] backdrop-blur-xl lg:left-[276px]">
+        <div className="mx-auto flex max-w-[1430px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"><div className="min-w-0"><p className="text-[10px] font-semibold">Site settings {dirty ? "have unsaved changes" : "are up to date"}</p><p aria-live="polite" className={"mt-1 truncate text-[9px] " + (state.status === "error" ? "text-[#9a4f41]" : "text-[var(--muted)]")}>{pending ? "Publishing settings…" : state.message || "Published changes are reflected across the website."}</p></div><div className="flex gap-2"><Link className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[var(--line)] bg-white px-4 text-[10px] font-semibold" href="/" target="_blank">View site</Link><button className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-ink px-5 text-[10px] font-semibold text-white disabled:cursor-wait disabled:opacity-55" disabled={pending} type="submit"><Icon className="h-3.5 w-3.5" name="arrow-up" /> {pending ? "Publishing…" : "Save & publish"}</button></div></div>
       </div>
       </fieldset>
     </form>

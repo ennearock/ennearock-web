@@ -67,7 +67,7 @@ export function CoverImageField({
   return (
     <div>
       <div
-        className="relative flex min-h-56 items-center justify-center overflow-hidden rounded-[16px] border border-[#d9d6cc] bg-[#eeece5]"
+        className="relative flex min-h-56 items-center justify-center overflow-hidden rounded-[16px] border border-[var(--line)] bg-surface-muted"
         style={{ backgroundColor: value ? undefined : accent }}
       >
         {value ? (
@@ -76,14 +76,14 @@ export function CoverImageField({
         ) : (
           <>
             <span className="absolute -right-10 -top-16 h-48 w-48 rounded-full border-[34px] border-white/25" />
-            <span className="relative grid h-12 w-12 place-items-center rounded-[14px] bg-white/45 text-[#11130f] backdrop-blur">
+            <span className="relative grid h-12 w-12 place-items-center rounded-[14px] bg-white/45 text-ink backdrop-blur">
               <Icon className="h-5 w-5" name="projects" />
             </span>
           </>
         )}
         <div className="absolute inset-x-3 bottom-3 flex flex-wrap justify-end gap-2">
           <button
-            className="inline-flex h-9 items-center gap-2 rounded-[10px] bg-[#11130f] px-3 text-[9px] font-semibold text-white shadow-lg disabled:cursor-wait disabled:opacity-65"
+            className="inline-flex h-9 items-center gap-2 rounded-[10px] bg-ink px-3 text-[9px] font-semibold text-white shadow-lg disabled:cursor-wait disabled:opacity-65"
             disabled={uploading}
             onClick={() => inputRef.current?.click()}
             type="button"
@@ -112,7 +112,7 @@ export function CoverImageField({
         ref={inputRef}
         type="file"
       />
-      <label className="mt-4 block text-[10px] font-semibold text-[#44483f]">
+      <label className="mt-4 block text-[10px] font-semibold text-ink">
         Or paste an image URL
         <input
           className={inputClassName}

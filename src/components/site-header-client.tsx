@@ -43,7 +43,7 @@ export function SiteHeaderClient({ content }: { content: GeneralContent }) {
     </div>
     <div className={`mobile-menu ${open ? "mobile-menu-open" : ""}`}><nav aria-label="Mobile navigation" className="site-container mobile-nav">
       {navigation.map((item, index) => <Link href={item.href} key={item.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{item.label}<ArrowUpRight /></Link>)}
-      <div className="mobile-actions"><Link className="button button-outline" href={content.headerLoginHref} onClick={() => setOpen(false)}>{content.headerLoginLabel}</Link><Link className="button button-lime" href={content.headerCtaHref} onClick={() => setOpen(false)}>{content.headerCtaLabel} <ArrowUpRight size={18} /></Link></div>
+      <div className="mobile-actions"><Link className="button button-outline" href={content.headerLoginHref} onClick={() => setOpen(false)}>{content.headerLoginLabel}</Link><Link className="button button-accent" href={content.headerCtaHref} onClick={() => setOpen(false)}>{content.headerCtaLabel} <ArrowUpRight size={18} /></Link></div>
     </nav></div>
   </header>;
 }

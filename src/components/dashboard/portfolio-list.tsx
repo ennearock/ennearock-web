@@ -62,31 +62,31 @@ export function PortfolioList({
 
   return (
     <>
-      <section className="rounded-[20px] border border-[#dedbd1] bg-white p-3 sm:p-4">
+      <section className="rounded-[20px] border border-[var(--line)] bg-white p-3 sm:p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex gap-1 overflow-x-auto rounded-[11px] bg-[#f2f0e9] p-1">
+          <div className="flex gap-1 overflow-x-auto rounded-[11px] bg-surface-muted p-1">
             {filters.map((item) => (
               <button
                 className={
                   "whitespace-nowrap rounded-[8px] px-3 py-2 text-[10px] font-semibold transition " +
                   (filter === item.id
-                    ? "bg-white text-[#11130f] shadow-sm"
-                    : "text-[#7f837a] hover:text-[#11130f]")
+                    ? "bg-white text-ink shadow-sm"
+                    : "text-[var(--muted)] hover:text-ink")
                 }
                 key={item.id}
                 onClick={() => setFilter(item.id)}
                 type="button"
               >
                 {item.label}
-                <span className="ml-1.5 font-mono text-[8px] text-[#a0a29b]">{item.count}</span>
+                <span className="ml-1.5 font-mono text-[8px] text-[var(--muted)]">{item.count}</span>
               </button>
             ))}
           </div>
           <label className="relative sm:w-72">
             <span className="sr-only">Search portfolio</span>
-            <Icon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#93968f]" name="search" />
+            <Icon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" name="search" />
             <input
-              className="h-10 w-full rounded-[11px] border border-[#dedbd1] bg-white pl-9 pr-3 text-xs outline-none focus:border-[#8b9e66] focus:ring-4 focus:ring-[#c9f26b]/20"
+              className="h-10 w-full rounded-[11px] border border-[var(--line)] bg-white pl-9 pr-3 text-xs outline-none focus:border-[var(--focus)] focus:ring-4 focus:ring-[var(--focus)]/20"
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search projects"
               type="search"
@@ -97,7 +97,7 @@ export function PortfolioList({
       </section>
 
       {message ? (
-        <p aria-live="polite" className="rounded-[13px] border border-[#d5d1c6] bg-white px-4 py-3 text-[10px] text-[#5f635a]">
+        <p aria-live="polite" className="rounded-[13px] border border-[var(--line)] bg-white px-4 py-3 text-[10px] text-[var(--muted)]">
           {message}
         </p>
       ) : null}
@@ -106,7 +106,7 @@ export function PortfolioList({
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {visible.map((project) => (
             <article
-              className="group overflow-hidden rounded-[22px] border border-[#dedbd1] bg-white transition hover:-translate-y-1 hover:border-[#c8c5ba] hover:shadow-[0_18px_50px_rgba(41,44,37,.09)]"
+              className="group overflow-hidden rounded-[22px] border border-[var(--line)] bg-white transition hover:-translate-y-1 hover:border-[var(--line)] hover:shadow-[0_18px_50px_rgba(19,20,24,.09)]"
               key={project.id}
             >
               <div className="relative h-44 overflow-hidden" style={{ backgroundColor: project.accent }}>
@@ -124,7 +124,7 @@ export function PortfolioList({
                   </>
                 )}
                 <div className="absolute inset-x-4 top-4 flex items-start justify-between">
-                  <span className="rounded-full bg-[#11130f]/90 px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur">
+                  <span className="rounded-full bg-ink/90 px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur">
                     {project.category}
                   </span>
                   <span
@@ -132,7 +132,7 @@ export function PortfolioList({
                       "rounded-full px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.1em] shadow-sm " +
                       (project.published
                         ? "bg-[#e5f3de] text-[#3e6b32]"
-                        : "bg-white/90 text-[#64675f]")
+                        : "bg-white/90 text-[var(--muted)]")
                     }
                   >
                     {project.published ? "Live" : "Draft"}
@@ -146,21 +146,21 @@ export function PortfolioList({
                     <div className="flex items-center gap-2">
                       <h2 className="truncate text-[15px] font-semibold tracking-[-0.025em]">{project.name}</h2>
                       {project.featured ? (
-                        <Icon className="h-3.5 w-3.5 shrink-0 text-[#718b41]" name="sparkles" />
+                        <Icon className="h-3.5 w-3.5 shrink-0 text-ink" name="sparkles" />
                       ) : null}
                     </div>
-                    <p className="mt-1 line-clamp-2 text-[10px] leading-4 text-[#8b8f86]">{project.tagline || "No tagline yet"}</p>
+                    <p className="mt-1 line-clamp-2 text-[10px] leading-4 text-[var(--muted)]">{project.tagline || "No tagline yet"}</p>
                   </div>
-                  <span className="rounded-full bg-[#f1efe8] px-2 py-1 font-mono text-[8px] text-[#858980]">#{project.sortOrder}</span>
+                  <span className="rounded-full bg-surface-muted px-2 py-1 font-mono text-[8px] text-[var(--muted)]">#{project.sortOrder}</span>
                 </div>
 
-                <div className="mt-5 flex items-center justify-between border-t border-[#edebe4] pt-4">
-                  <p className="text-[8px] text-[#9b9e96]">Updated {formatUpdatedAt(project.updatedAt)}</p>
+                <div className="mt-5 flex items-center justify-between border-t border-[var(--line)] pt-4">
+                  <p className="text-[8px] text-[var(--muted)]">Updated {formatUpdatedAt(project.updatedAt)}</p>
                   <div className="flex gap-1.5">
                     {project.published ? (
                       <Link
                         aria-label={"View " + project.name + " live"}
-                        className="grid h-9 w-9 place-items-center rounded-[10px] border border-[#dddacf] text-[#6c7068] hover:border-[#bdbab0] hover:text-[#11130f]"
+                        className="grid h-9 w-9 place-items-center rounded-[10px] border border-[var(--line)] text-[var(--muted)] hover:border-[var(--line)] hover:text-ink"
                         href={"/projects/" + project.slug}
                         target="_blank"
                       >
@@ -177,7 +177,7 @@ export function PortfolioList({
                       <Icon className="h-4 w-4" name="trash" />
                     </button>
                     <Link
-                      className="inline-flex h-9 items-center gap-2 rounded-[10px] bg-[#11130f] px-3.5 text-[9px] font-semibold text-white hover:bg-[#2b2f27]"
+                      className="inline-flex h-9 items-center gap-2 rounded-[10px] bg-ink px-3.5 text-[9px] font-semibold text-white hover:bg-panel"
                       href={"/dashboard/portfolio/" + project.id}
                     >
                       Edit <Icon className="h-3.5 w-3.5" name="edit" />
@@ -189,18 +189,18 @@ export function PortfolioList({
           ))}
         </section>
       ) : (
-        <div className="rounded-[22px] border border-dashed border-[#cbc8bd] bg-white/50 px-6 py-20 text-center">
-          <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#e9e7df] text-[#72766d]">
+        <div className="rounded-[22px] border border-dashed border-[var(--line)] bg-white/50 px-6 py-20 text-center">
+          <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-surface-muted text-[var(--muted)]">
             <Icon name={projects.length ? "search" : "projects"} />
           </span>
           <h2 className="mt-4 text-sm font-semibold">
             {projects.length ? "No matching projects" : "Add your first portfolio project"}
           </h2>
-          <p className="mt-2 text-xs text-[#858980]">
+          <p className="mt-2 text-xs text-[var(--muted)]">
             {projects.length ? "Try another filter or search term." : "Build a case study, save it as a draft, and publish when it is ready."}
           </p>
           {!projects.length ? (
-            <Link className="mt-5 inline-flex h-10 items-center gap-2 rounded-[11px] bg-[#11130f] px-4 text-[10px] font-semibold text-white" href="/dashboard/portfolio/new">
+            <Link className="mt-5 inline-flex h-10 items-center gap-2 rounded-[11px] bg-ink px-4 text-[10px] font-semibold text-white" href="/dashboard/portfolio/new">
               <Icon className="h-3.5 w-3.5" name="plus" /> New project
             </Link>
           ) : null}

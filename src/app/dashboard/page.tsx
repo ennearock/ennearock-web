@@ -75,7 +75,7 @@ export default async function DashboardOverviewPage() {
         description="Edit your portfolio, refine the homepage, and publish changes without touching the codebase."
         action={
           <Link
-            className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-[#11130f] px-4 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#2a2e25]"
+            className="inline-flex h-11 items-center gap-2 rounded-[12px] bg-ink px-4 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-panel"
             href="/dashboard/portfolio/new"
           >
             <Icon className="h-4 w-4" name="plus" /> Add project
@@ -91,39 +91,39 @@ export default async function DashboardOverviewPage() {
       >
         {stats.map((stat) => (
           <Link
-            className="group rounded-[20px] border border-[#dedbd1] bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#cbc8bd] hover:shadow-[0_14px_40px_rgba(41,44,37,.07)]"
+            className="group rounded-[20px] border border-[var(--line)] bg-white p-5 transition hover:-translate-y-0.5 hover:border-[var(--line)] hover:shadow-[0_14px_40px_rgba(19,20,24,.07)]"
             href={stat.href}
             key={stat.label}
           >
             <div className="flex items-start justify-between">
-              <span className="grid h-10 w-10 place-items-center rounded-[12px] bg-[#f1efe8] text-[#62665c] transition group-hover:bg-[#c9f26b] group-hover:text-[#11130f]">
+              <span className="grid h-10 w-10 place-items-center rounded-[12px] bg-surface-muted text-[var(--muted)] transition group-hover:bg-accent group-hover:text-ink">
                 <Icon className="h-[18px] w-[18px]" name={stat.icon} />
               </span>
               <Icon
-                className="h-4 w-4 text-[#b0b2ab] transition group-hover:translate-x-0.5 group-hover:text-[#11130f]"
+                className="h-4 w-4 text-[var(--muted)] transition group-hover:translate-x-0.5 group-hover:text-ink"
                 name="arrow-right"
               />
             </div>
-            <p className="mt-6 text-[28px] font-semibold tracking-[-0.05em] text-[#11130f]">
+            <p className="mt-6 text-[28px] font-semibold tracking-[-0.05em] text-ink">
               {stat.value}
             </p>
-            <p className="mt-1 text-xs font-medium text-[#454940]">{stat.label}</p>
-            <p className="mt-1 text-[9px] text-[#969990]">{stat.note}</p>
+            <p className="mt-1 text-xs font-medium text-ink">{stat.label}</p>
+            <p className="mt-1 text-[9px] text-[var(--muted)]">{stat.note}</p>
           </Link>
         ))}
       </section>
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(300px,.72fr)]">
-        <section className="overflow-hidden rounded-[22px] border border-[#dedbd1] bg-white">
-          <div className="flex items-center justify-between border-b border-[#e6e3da] p-5 sm:px-6">
+        <section className="overflow-hidden rounded-[22px] border border-[var(--line)] bg-white">
+          <div className="flex items-center justify-between border-b border-[var(--line)] p-5 sm:px-6">
             <div>
               <h2 className="text-sm font-semibold">Portfolio at a glance</h2>
-              <p className="mt-1 text-[10px] text-[#8d9088]">
+              <p className="mt-1 text-[10px] text-[var(--muted)]">
                 Most recently updated projects
               </p>
             </div>
             <Link
-              className="flex items-center gap-1 text-[10px] font-semibold text-[#5c6e45] hover:text-[#11130f]"
+              className="flex items-center gap-1 text-[10px] font-semibold text-ink hover:text-ink"
               href="/dashboard/portfolio"
             >
               Manage all <Icon className="h-3.5 w-3.5" name="arrow-right" />
@@ -131,10 +131,10 @@ export default async function DashboardOverviewPage() {
           </div>
 
           {portfolio.projects.length ? (
-            <div className="divide-y divide-[#eeece6]">
+            <div className="divide-y divide-[var(--line)]">
               {portfolio.projects.slice(0, 5).map((project) => (
                 <div
-                  className="flex items-center gap-3 px-5 py-4 hover:bg-[#faf9f5] sm:px-6"
+                  className="flex items-center gap-3 px-5 py-4 hover:bg-background sm:px-6"
                   key={project.id}
                 >
                   <span
@@ -149,12 +149,12 @@ export default async function DashboardOverviewPage() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-xs font-semibold">{project.name}</p>
-                    <p className="mt-1 truncate text-[9px] text-[#969990]">
+                    <p className="mt-1 truncate text-[9px] text-[var(--muted)]">
                       {project.category} · {project.tagline}
                     </p>
                   </div>
                   {project.featured ? (
-                    <span className="hidden rounded-full bg-[#eef7dc] px-2 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.08em] text-[#4d692d] sm:inline-flex">
+                    <span className="hidden rounded-full bg-surface-muted px-2 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.08em] text-ink sm:inline-flex">
                       Featured
                     </span>
                   ) : null}
@@ -163,14 +163,14 @@ export default async function DashboardOverviewPage() {
                       "rounded-full px-2.5 py-1 font-mono text-[8px] font-semibold uppercase tracking-[0.08em] " +
                       (project.published
                         ? "bg-[#e5f3de] text-[#3e6b32]"
-                        : "bg-[#ecebe6] text-[#64675f]")
+                        : "bg-surface-muted text-[var(--muted)]")
                     }
                   >
                     {project.published ? "Live" : "Draft"}
                   </span>
                   <Link
                     aria-label={"Edit " + project.name}
-                    className="grid h-8 w-8 place-items-center rounded-[9px] text-[#858980] hover:bg-[#f0eee8] hover:text-[#11130f]"
+                    className="grid h-8 w-8 place-items-center rounded-[9px] text-[var(--muted)] hover:bg-[var(--line)] hover:text-ink"
                     href={"/dashboard/portfolio/" + project.id}
                   >
                     <Icon className="h-4 w-4" name="edit" />
@@ -182,7 +182,7 @@ export default async function DashboardOverviewPage() {
             <div className="px-6 py-16 text-center">
               <p className="text-sm font-semibold">Your portfolio is ready for its first project.</p>
               <Link
-                className="mt-4 inline-flex items-center gap-2 text-[10px] font-semibold text-[#5c6e45]"
+                className="mt-4 inline-flex items-center gap-2 text-[10px] font-semibold text-ink"
                 href="/dashboard/portfolio/new"
               >
                 Create a case study <Icon className="h-3.5 w-3.5" name="arrow-right" />
@@ -191,7 +191,7 @@ export default async function DashboardOverviewPage() {
           )}
         </section>
 
-        <section className="rounded-[22px] border border-[#dedbd1] bg-[#151813] p-5 text-white sm:p-6">
+        <section className="rounded-[22px] border border-[var(--line)] bg-panel p-5 text-white sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.19em] text-white/35">
@@ -201,7 +201,7 @@ export default async function DashboardOverviewPage() {
                 Website content
               </h2>
             </div>
-            <span className="grid h-9 w-9 place-items-center rounded-[11px] bg-[#c9f26b] text-[#11130f]">
+            <span className="grid h-9 w-9 place-items-center rounded-[11px] bg-accent text-ink">
               <Icon className="h-4 w-4" name="globe" />
             </span>
           </div>
@@ -226,7 +226,7 @@ export default async function DashboardOverviewPage() {
                   <span
                     className={
                       "h-1.5 w-1.5 shrink-0 rounded-full " +
-                      (index === 0 && setupMessage ? "bg-[#e49a6a]" : "bg-[#c9f26b]")
+                      (index === 0 && setupMessage ? "bg-[#e49a6a]" : "bg-accent")
                     }
                   />
                   <span className="truncate">{value}</span>
@@ -236,7 +236,7 @@ export default async function DashboardOverviewPage() {
           </div>
 
           <Link
-            className="mt-7 inline-flex h-10 w-full items-center justify-center gap-2 rounded-[11px] bg-[#c9f26b] text-[10px] font-semibold text-[#11130f] transition hover:bg-[#d6fa82]"
+            className="mt-7 inline-flex h-10 w-full items-center justify-center gap-2 rounded-[11px] bg-accent text-[10px] font-semibold text-ink transition hover:bg-accent"
             href="/dashboard/homepage"
           >
             Edit homepage <Icon className="h-3.5 w-3.5" name="arrow-right" />
@@ -244,7 +244,7 @@ export default async function DashboardOverviewPage() {
         </section>
       </div>
 
-      <section className="relative overflow-hidden rounded-[22px] border border-[#d7d3c8] bg-[#7568f8] px-6 py-7 text-white sm:px-8">
+      <section className="relative overflow-hidden rounded-[22px] border border-[var(--line)] bg-panel px-6 py-7 text-white sm:px-8">
         <span className="absolute -right-16 -top-32 h-72 w-72 rounded-full border-[42px] border-white/10" />
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -259,7 +259,7 @@ export default async function DashboardOverviewPage() {
             </p>
           </div>
           <Link
-            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-[#c9f26b] px-5 text-[10px] font-semibold text-[#11130f]"
+            className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-5 text-[10px] font-semibold text-ink"
             href="/"
             target="_blank"
           >

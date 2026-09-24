@@ -14,7 +14,7 @@ export function CatalogCard({ product, priority = false }: { product: Product; p
       </Link>
       <div className="catalog-meta">
         <div className="catalog-title-row"><div><h3><Link href={href}>{product.name}</Link></h3><p>{product.tagline}</p></div><strong>{product.kind === "project" ? "Case study" : product.priceLabel}</strong></div>
-        <div className="catalog-tags"><Pill>{product.category}</Pill>{product.badge ? <Pill tone="lime">{product.badge}</Pill> : null}<span>{product.stack.slice(0, 2).join(" · ")}</span></div>
+        <div className="catalog-tags"><Pill>{product.category}</Pill>{product.badge ? <Pill tone="accent">{product.badge}</Pill> : null}<span>{product.stack.slice(0, 2).join(" · ")}</span></div>
       </div>
     </article>
   );

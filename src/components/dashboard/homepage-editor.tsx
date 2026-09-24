@@ -81,18 +81,18 @@ function NamedItemsEditor<T extends ServiceItem | ProcessItem>({
   return (
     <div className="space-y-3">
       {items.map((item, index) => (
-        <div className="rounded-[14px] border border-[#e0ddd4] bg-[#faf9f5] p-4" key={index}>
+        <div className="rounded-[14px] border border-[var(--line)] bg-background p-4" key={index}>
           <div className="mb-3 flex items-center justify-between">
-            <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-[#858980]">{noun} {String(index + 1).padStart(2, "0")}</span>
+            <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-[var(--muted)]">{noun} {String(index + 1).padStart(2, "0")}</span>
             <button aria-label={"Remove " + noun + " " + (index + 1)} className="grid h-7 w-7 place-items-center rounded-[8px] text-[#9a7168] hover:bg-[#fae9e5] disabled:opacity-35" disabled={items.length === 1} onClick={() => onChange(items.filter((_, itemIndex) => itemIndex !== index))} type="button"><Icon className="h-3.5 w-3.5" name="trash" /></button>
           </div>
           <div className="grid gap-3 sm:grid-cols-[.75fr_1.25fr]">
-            <input aria-label={noun + " title"} className="h-10 rounded-[10px] border border-[#d9d6cc] bg-white px-3 text-xs font-semibold outline-none focus:border-[#83985f]" maxLength={120} onChange={(event) => {
+            <input aria-label={noun + " title"} className="h-10 rounded-[10px] border border-[var(--line)] bg-white px-3 text-xs font-semibold outline-none focus:border-[var(--focus)]" maxLength={120} onChange={(event) => {
               const next = [...items];
               next[index] = { ...item, title: event.target.value };
               onChange(next);
             }} placeholder="Title" value={item.title} />
-            <textarea aria-label={noun + " description"} className="min-h-20 resize-y rounded-[10px] border border-[#d9d6cc] bg-white px-3 py-2.5 text-xs leading-5 outline-none focus:border-[#83985f]" maxLength={500} onChange={(event) => {
+            <textarea aria-label={noun + " description"} className="min-h-20 resize-y rounded-[10px] border border-[var(--line)] bg-white px-3 py-2.5 text-xs leading-5 outline-none focus:border-[var(--focus)]" maxLength={500} onChange={(event) => {
               const next = [...items];
               next[index] = { ...item, description: event.target.value };
               onChange(next);
@@ -100,38 +100,38 @@ function NamedItemsEditor<T extends ServiceItem | ProcessItem>({
           </div>
         </div>
       ))}
-      <button className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[#c7c4b9] px-3 text-[9px] font-semibold text-[#687752] hover:bg-[#f6f8ef] disabled:opacity-45" disabled={items.length >= 8} onClick={() => onChange([...items, { title: "", description: "" } as T])} type="button"><Icon className="h-3.5 w-3.5" name="plus" /> Add {noun}</button>
+      <button className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[var(--line)] px-3 text-[9px] font-semibold text-ink hover:bg-surface-muted disabled:opacity-45" disabled={items.length >= 8} onClick={() => onChange([...items, { title: "", description: "" } as T])} type="button"><Icon className="h-3.5 w-3.5" name="plus" /> Add {noun}</button>
     </div>
   );
 }
 
 function HomepageMiniPreview({ content }: { content: SiteContent }) {
   return (
-    <div className="overflow-hidden rounded-[18px] border border-[#d8d5cb] bg-[#fffefa] shadow-[0_16px_45px_rgba(41,44,37,.08)]">
+    <div className="overflow-hidden rounded-[18px] border border-[var(--line)] bg-background shadow-[0_16px_45px_rgba(19,20,24,.08)]">
       {content.announcement.enabled ? (
-        <div className="flex h-7 items-center justify-center bg-[#11130f] px-3 text-[6px] text-white">
-          <span className="mr-2 rounded-full bg-[#c9f26b] px-1.5 py-0.5 font-bold uppercase text-[#11130f]">{content.announcement.badge}</span>
+        <div className="flex h-7 items-center justify-center bg-ink px-3 text-[6px] text-white">
+          <span className="mr-2 rounded-full bg-accent px-1.5 py-0.5 font-bold uppercase text-ink">{content.announcement.badge}</span>
           <span className="truncate">{content.announcement.text}</span>
         </div>
       ) : null}
-      <div className="flex h-10 items-center border-b border-[#dedbd1] px-4">
+      <div className="flex h-10 items-center border-b border-[var(--line)] px-4">
         <BrandLockup compact name={content.general.brandName} />
-        <span className="ml-auto h-4 w-12 rounded-full bg-[#11130f]" />
+        <span className="ml-auto h-4 w-12 rounded-full bg-ink" />
       </div>
       <div className="relative min-h-[280px] overflow-hidden p-5">
-        <span className="font-mono text-[6px] uppercase tracking-[0.13em] text-[#676b63]">{content.hero.eyebrow}</span>
+        <span className="font-mono text-[6px] uppercase tracking-[0.13em] text-[var(--muted)]">{content.hero.eyebrow}</span>
         <h3 className="mt-5 max-w-[80%] text-[27px] font-medium leading-[.88] tracking-[-0.07em]">
           {content.hero.title.split("\n").map((line, index) => <span className="block" key={index}>{line}</span>)}
-          <em className="mt-1 block font-serif font-normal text-[#7568f8]">{content.hero.accentTitle}</em>
+          <em className="mt-1 block font-serif font-normal text-panel">{content.hero.accentTitle}</em>
         </h3>
-        <p className="mt-4 max-w-[72%] text-[7px] leading-3 text-[#676b63]">{content.hero.description}</p>
-        <span className="mt-5 inline-flex h-6 items-center rounded-full bg-[#c9f26b] px-3 text-[6px] font-bold">{content.hero.primaryCtaLabel}</span>
+        <p className="mt-4 max-w-[72%] text-[7px] leading-3 text-[var(--muted)]">{content.hero.description}</p>
+        <span className="mt-5 inline-flex h-6 items-center rounded-full bg-ink px-3 text-[6px] font-bold text-white">{content.hero.primaryCtaLabel}</span>
         <div className="absolute -bottom-12 -right-16 h-52 w-52 rounded-full border-[38px]" style={{ borderColor: content.hero.previewAccent + "55" }} />
         <div className="absolute bottom-5 right-5 h-28 w-28 rotate-[-4deg] rounded-[10px] border border-black/10 bg-white p-3 shadow-lg">
-          <span className="block h-1.5 w-12 rounded-full bg-[#11130f]/20" />
-          <span className="mt-4 block h-3 w-16 rounded bg-[#c9f26b]" />
-          <span className="mt-2 block h-1 w-full rounded bg-[#11130f]/10" />
-          <span className="mt-2 block h-8 w-full rounded bg-[#f0eee8]" />
+          <span className="block h-1.5 w-12 rounded-full bg-ink/20" />
+          <span className="mt-4 block h-3 w-16 rounded bg-accent" />
+          <span className="mt-2 block h-1 w-full rounded bg-ink/10" />
+          <span className="mt-2 block h-8 w-full rounded bg-[var(--line)]" />
         </div>
       </div>
     </div>
@@ -178,12 +178,12 @@ export function HomepageEditor({
       <SetupNotice message={setupMessage} />
 
       <div className="mt-5 grid gap-5 xl:grid-cols-[220px_minmax(0,1fr)_300px]">
-        <nav aria-label="Homepage editor sections" className="h-fit rounded-[18px] border border-[#dedbd1] bg-white p-2 xl:sticky xl:top-[90px]">
+        <nav aria-label="Homepage editor sections" className="h-fit rounded-[18px] border border-[var(--line)] bg-white p-2 xl:sticky xl:top-[90px]">
           <div className="flex gap-1 overflow-x-auto xl:block xl:space-y-1">
             {tabs.map((tab) => (
-              <button className={"flex min-h-11 shrink-0 items-center gap-2.5 rounded-[11px] px-3 text-left text-[10px] font-semibold transition xl:w-full " + (activeTab === tab.id ? "bg-[#11130f] text-white" : "text-[#6f736a] hover:bg-[#f2f0e9] hover:text-[#11130f]")} key={tab.id} onClick={() => setActiveTab(tab.id)} type="button">
+              <button className={"flex min-h-11 shrink-0 items-center gap-2.5 rounded-[11px] px-3 text-left text-[10px] font-semibold transition xl:w-full " + (activeTab === tab.id ? "bg-ink text-white" : "text-[var(--muted)] hover:bg-surface-muted hover:text-ink")} key={tab.id} onClick={() => setActiveTab(tab.id)} type="button">
                 <Icon className="h-4 w-4 shrink-0" name={tab.icon} />
-                <span><span className="block">{tab.label}</span><span className={"mt-0.5 hidden text-[8px] font-normal xl:block " + (activeTab === tab.id ? "text-white/42" : "text-[#aaa9a2]")}>{tab.description}</span></span>
+                <span><span className="block">{tab.label}</span><span className={"mt-0.5 hidden text-[8px] font-normal xl:block " + (activeTab === tab.id ? "text-white/42" : "text-[var(--muted)]")}>{tab.description}</span></span>
               </button>
             ))}
           </div>
@@ -279,15 +279,15 @@ export function HomepageEditor({
               <EditorCard description="Edit the three offer cards. Mark one plan as featured to give it the dark treatment." title="Offers">
                 <div className="space-y-4">
                   {content.pricing.plans.map((plan, index) => (
-                    <div className="rounded-[16px] border border-[#dedbd1] bg-[#faf9f5] p-4 sm:p-5" key={index}>
-                      <div className="mb-4 flex items-center justify-between"><span className="font-mono text-[8px] uppercase tracking-[0.14em] text-[#858980]">Offer {String(index + 1).padStart(2, "0")}</span><button aria-label={"Remove offer " + (index + 1)} className="grid h-8 w-8 place-items-center rounded-lg text-[#9a7168] hover:bg-[#fae9e5] disabled:opacity-35" disabled={content.pricing.plans.length === 1} onClick={() => update("pricing", { ...content.pricing, plans: content.pricing.plans.filter((_, itemIndex) => itemIndex !== index) })} type="button"><Icon className="h-3.5 w-3.5" name="trash" /></button></div>
+                    <div className="rounded-[16px] border border-[var(--line)] bg-background p-4 sm:p-5" key={index}>
+                      <div className="mb-4 flex items-center justify-between"><span className="font-mono text-[8px] uppercase tracking-[0.14em] text-[var(--muted)]">Offer {String(index + 1).padStart(2, "0")}</span><button aria-label={"Remove offer " + (index + 1)} className="grid h-8 w-8 place-items-center rounded-lg text-[#9a7168] hover:bg-[#fae9e5] disabled:opacity-35" disabled={content.pricing.plans.length === 1} onClick={() => update("pricing", { ...content.pricing, plans: content.pricing.plans.filter((_, itemIndex) => itemIndex !== index) })} type="button"><Icon className="h-3.5 w-3.5" name="trash" /></button></div>
                       <div className="grid gap-4 sm:grid-cols-2"><Field label="Name"><input className={inputClassName} maxLength={100} onChange={(event) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, name: event.target.value }; update("pricing", { ...content.pricing, plans }); }} value={plan.name} /></Field><Field label="Price"><input className={inputClassName} maxLength={60} onChange={(event) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, price: event.target.value }; update("pricing", { ...content.pricing, plans }); }} value={plan.price} /></Field><Field label="Suffix"><input className={inputClassName} maxLength={60} onChange={(event) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, suffix: event.target.value }; update("pricing", { ...content.pricing, plans }); }} value={plan.suffix} /></Field><Field label="Description"><input className={inputClassName} maxLength={240} onChange={(event) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, description: event.target.value }; update("pricing", { ...content.pricing, plans }); }} value={plan.description} /></Field><Field label="Button label"><input className={inputClassName} maxLength={100} onChange={(event) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, ctaLabel: event.target.value }; update("pricing", { ...content.pricing, plans }); }} value={plan.ctaLabel} /></Field><Field label="Button destination"><input className={inputClassName} maxLength={500} onChange={(event) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, ctaHref: event.target.value }; update("pricing", { ...content.pricing, plans }); }} value={plan.ctaHref} /></Field></div>
                       <div className="mt-4"><Field label="Features"><StringListEditor addLabel="Add feature" maxItems={8} onChange={(features) => { const plans = [...content.pricing.plans]; plans[index] = { ...plan, features }; update("pricing", { ...content.pricing, plans }); }} placeholder="Included deliverable" values={plan.features} /></Field></div>
                       <div className="mt-4"><Toggle checked={plan.featured} description="Use the emphasized card treatment." label="Featured offer" onChange={(featured) => { const plans = content.pricing.plans.map((item, itemIndex) => ({ ...item, featured: itemIndex === index ? featured : featured ? false : item.featured })); update("pricing", { ...content.pricing, plans }); }} /></div>
                     </div>
                   ))}
                 </div>
-                <button className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[#c7c4b9] px-3 text-[9px] font-semibold text-[#687752] hover:bg-[#f6f8ef] disabled:opacity-45" disabled={content.pricing.plans.length >= 4} onClick={() => update("pricing", { ...content.pricing, plans: [...content.pricing.plans, { name: "New offer", description: "", price: "Let's talk", suffix: "custom scope", features: [""], ctaLabel: "Start a conversation", ctaHref: "/contact", featured: false } as PricingPlan] })} type="button"><Icon className="h-3.5 w-3.5" name="plus" /> Add offer</button>
+                <button className="inline-flex h-9 items-center gap-2 rounded-[10px] border border-dashed border-[var(--line)] px-3 text-[9px] font-semibold text-ink hover:bg-surface-muted disabled:opacity-45" disabled={content.pricing.plans.length >= 4} onClick={() => update("pricing", { ...content.pricing, plans: [...content.pricing.plans, { name: "New offer", description: "", price: "Let's talk", suffix: "custom scope", features: [""], ctaLabel: "Start a conversation", ctaHref: "/contact", featured: false } as PricingPlan] })} type="button"><Icon className="h-3.5 w-3.5" name="plus" /> Add offer</button>
               </EditorCard>
               <EditorCard title="Pricing note"><div className="grid gap-4 sm:grid-cols-3"><Field label="Prompt"><input className={inputClassName} maxLength={160} onChange={(event) => update("pricing", { ...content.pricing, note: event.target.value })} value={content.pricing.note} /></Field><Field label="Link label"><input className={inputClassName} maxLength={160} onChange={(event) => update("pricing", { ...content.pricing, noteLinkLabel: event.target.value })} value={content.pricing.noteLinkLabel} /></Field><Field label="Link destination"><input className={inputClassName} maxLength={500} onChange={(event) => update("pricing", { ...content.pricing, noteLinkHref: event.target.value })} value={content.pricing.noteLinkHref} /></Field></div></EditorCard>
             </>
@@ -305,19 +305,19 @@ export function HomepageEditor({
 
         <aside className="space-y-4 xl:sticky xl:top-[90px] xl:self-start">
           <HomepageMiniPreview content={content} />
-          <section className="rounded-[18px] border border-[#dedbd1] bg-white p-5">
-            <div className="flex items-center justify-between"><p className="text-xs font-semibold">Homepage health</p><span className="rounded-full bg-[#eef7dc] px-2 py-1 font-mono text-[8px] text-[#4d692d]">{completedSections}/7</span></div>
-            <p className="mt-3 text-[9px] leading-5 text-[#858980]">Structured fields preserve the existing responsive layout and visual rhythm.</p>
-            <div className="mt-4 border-t border-[#ebe8e0] pt-4"><p className="text-[8px] uppercase tracking-[0.12em] text-[#999c94]">Last database update</p><p className="mt-2 text-[10px] font-medium">{updatedAt ? new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(updatedAt)) : "Using built-in defaults"}</p></div>
-            <Link className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[#d8d5cb] text-[9px] font-semibold" href="/" target="_blank">Open live homepage <Icon className="h-3.5 w-3.5" name="external" /></Link>
+          <section className="rounded-[18px] border border-[var(--line)] bg-white p-5">
+            <div className="flex items-center justify-between"><p className="text-xs font-semibold">Homepage health</p><span className="rounded-full bg-surface-muted px-2 py-1 font-mono text-[8px] text-ink">{completedSections}/7</span></div>
+            <p className="mt-3 text-[9px] leading-5 text-[var(--muted)]">Structured fields preserve the existing responsive layout and visual rhythm.</p>
+            <div className="mt-4 border-t border-[var(--line)] pt-4"><p className="text-[8px] uppercase tracking-[0.12em] text-[var(--muted)]">Last database update</p><p className="mt-2 text-[10px] font-medium">{updatedAt ? new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short" }).format(new Date(updatedAt)) : "Using built-in defaults"}</p></div>
+            <Link className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--line)] text-[9px] font-semibold" href="/" target="_blank">Open live homepage <Icon className="h-3.5 w-3.5" name="external" /></Link>
           </section>
         </aside>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#d7d4ca] bg-[#f8f6f0]/95 px-4 py-3 shadow-[0_-12px_40px_rgba(31,34,28,.08)] backdrop-blur-xl lg:left-[276px]">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] bg-background/95 px-4 py-3 shadow-[0_-12px_40px_rgba(19,20,24,.08)] backdrop-blur-xl lg:left-[276px]">
         <div className="mx-auto flex max-w-[1430px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="min-w-0"><p className="text-[10px] font-semibold">Homepage {dirty ? "has unsaved changes" : "is up to date"}</p><p aria-live="polite" className={"mt-1 truncate text-[9px] " + (state.status === "error" ? "text-[#9a4f41]" : "text-[#74786f]")}>{pending ? "Publishing homepage…" : state.message || "Changes become visible after publishing."}</p></div>
-          <div className="flex gap-2"><Link className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[#d4d1c7] bg-white px-4 text-[10px] font-semibold" href="/" target="_blank">View site</Link><button className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-[#11130f] px-5 text-[10px] font-semibold text-white disabled:cursor-wait disabled:opacity-55" disabled={pending} type="submit"><Icon className="h-3.5 w-3.5" name="arrow-up" /> {pending ? "Publishing…" : "Save & publish"}</button></div>
+          <div className="min-w-0"><p className="text-[10px] font-semibold">Homepage {dirty ? "has unsaved changes" : "is up to date"}</p><p aria-live="polite" className={"mt-1 truncate text-[9px] " + (state.status === "error" ? "text-[#9a4f41]" : "text-[var(--muted)]")}>{pending ? "Publishing homepage…" : state.message || "Changes become visible after publishing."}</p></div>
+          <div className="flex gap-2"><Link className="inline-flex h-10 items-center justify-center rounded-[10px] border border-[var(--line)] bg-white px-4 text-[10px] font-semibold" href="/" target="_blank">View site</Link><button className="inline-flex h-10 items-center gap-2 rounded-[10px] bg-ink px-5 text-[10px] font-semibold text-white disabled:cursor-wait disabled:opacity-55" disabled={pending} type="submit"><Icon className="h-3.5 w-3.5" name="arrow-up" /> {pending ? "Publishing…" : "Save & publish"}</button></div>
         </div>
       </div>
       </fieldset>
