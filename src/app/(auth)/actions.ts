@@ -1,11 +1,11 @@
 "use server";
 
 import { isAuthError } from "@supabase/supabase-js";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { getAdminUser } from "@/lib/auth/admin";
-import { safeDashboardPath } from "@/lib/auth/paths";
+import { getAccountUser } from "@/lib/auth/account";
+import { authenticatedPath, safeWorkspacePath } from "@/lib/auth/paths";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 export type AuthActionState = {
@@ -65,17 +65,6 @@ function logAuthFailure(
   error: unknown,
 ) {
   console.error(`[auth:${context}] request failed`, authErrorDetails(error));
-}
-
-async function safeSignOut(
-  supabase: Awaited<ReturnType<typeof createServerSupabaseClient>>,
-) {
-  try {
-    const { error } = await supabase.auth.signOut({ scope: "local" });
-    if (error) logAuthFailure("logout", error);
-  } catch (error) {
-    logAuthFailure("logout", error);
-  }
 }
 
 function loginErrorMessage(error: unknown) {
@@ -172,22 +161,20 @@ export async function loginAction(
     return errorState(loginErrorMessage(signInError));
   }
 
-  let admin;
+  let account;
 
   try {
-    admin = await getAdminUser();
+    account = await getAccountUser();
   } catch (error) {
     logAuthFailure("login", error);
-    await safeSignOut(supabase);
-    return errorState("The admin workspace is temporarily unavailable.");
+    return errorState("You are signed in, but your account is temporarily unavailable. Please try again.");
   }
 
-  if (!admin) {
-    await safeSignOut(supabase);
-    return errorState("This account is not authorized for the admin workspace.");
+  if (!account) {
+    return errorState("Your session could not be verified. Please sign in again.");
   }
 
-  redirect(safeDashboardPath(formData.get("next")));
+  redirect(authenticatedPath(formData.get("next"), account.isAdmin));
 }
 
 export async function signupAction(
@@ -204,15 +191,15 @@ export async function signupAction(
     return errorState("Enter a name between 2 and 80 characters.");
   }
 
-  if (company.length < 2 || company.length > 120) {
-    return errorState("Enter a studio name between 2 and 120 characters.");
+  if (company && (company.length < 2 || company.length > 120)) {
+    return errorState("Enter a company name between 2 and 120 characters, or leave it blank.");
   }
 
   if (formData.get("terms") !== "accepted") {
     return errorState("Accept the Terms and Privacy Policy to create an account.");
   }
 
-  const nextPath = safeDashboardPath(formData.get("next"));
+  const nextPath = safeWorkspacePath(formData.get("next"));
   const emailRedirectTo = await confirmationRedirect();
   let supabase: Awaited<ReturnType<typeof createServerSupabaseClient>>;
 
@@ -231,7 +218,7 @@ export async function signupAction(
       password: parsed.password,
       options: {
         data: {
-          company,
+          company: company || null,
           full_name: fullName,
         },
         ...(emailRedirectTo ? { emailRedirectTo } : {}),
@@ -250,34 +237,40 @@ export async function signupAction(
   }
 
   if (!data.session) {
+    // Keep the callback URL exact for existing Supabase redirect allowlists.
+    // PKCE confirmation already requires this browser's verifier cookie.
+    const cookieStore = await cookies();
+    cookieStore.set("ennearock_email_next", nextPath, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60,
+      path: "/auth/confirm",
+      sameSite: "lax",
+      secure: emailRedirectTo?.startsWith("https://") ?? false,
+    });
     return {
       message: "Check your email to confirm the account, then sign in.",
       status: "success",
     };
   }
 
-  let admin;
+  let account;
 
   try {
-    admin = await getAdminUser();
+    account = await getAccountUser();
   } catch (error) {
     logAuthFailure("signup", error);
-    await safeSignOut(supabase);
-    return errorState("Your account was created, but the admin workspace is unavailable.");
+    return errorState("Your account was created, but it could not be loaded. Please try signing in again.");
   }
 
-  if (!admin) {
-    await safeSignOut(supabase);
-    return errorState(
-      "Your account was created but has not been granted admin access.",
-    );
+  if (!account) {
+    return errorState("Your account was created. Please sign in to continue.");
   }
 
-  redirect(nextPath);
+  redirect(authenticatedPath(nextPath, account.isAdmin));
 }
 
 export async function logoutAction(): Promise<void> {
   const supabase = await createServerSupabaseClient();
-  await supabase.auth.signOut();
+  await supabase.auth.signOut({ scope: "local" });
   redirect("/login");
 }

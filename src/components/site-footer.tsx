@@ -6,7 +6,7 @@ import { getSiteContent } from "@/lib/content/queries";
 
 const footerLinks = [
   { title: "Explore", links: [["Templates", "/templates"], ["Product database", "/products"], ["Projects", "/projects"], ["Services", "/#services"], ["Pricing", "/#pricing"]] },
-  { title: "Company", links: [["About", "/#about"], ["Contact", "/contact"], ["Sign in", "/login"], ["Dashboard", "/dashboard"]] },
+  { title: "Company", links: [["About", "/#about"], ["Contact", "/contact"], ["Sign in", "/login"], ["Client space", "/account"]] },
 ];
 
 export async function SiteFooter() {

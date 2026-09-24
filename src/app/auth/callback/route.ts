@@ -1,8 +1,8 @@
 import { isAuthError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 
-import { getAdminUser } from "@/lib/auth/admin";
-import { safeDashboardPath } from "@/lib/auth/paths";
+import { getAccountUser } from "@/lib/auth/account";
+import { authenticatedPath, safeWorkspacePath } from "@/lib/auth/paths";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 const OAUTH_NEXT_COOKIE = "ennearock_oauth_next";
@@ -31,16 +31,15 @@ function sourcePage(request: NextRequest) {
 function errorRedirect(
   request: NextRequest,
   code:
-    | "admin_setup"
+    | "account_setup"
     | "google_disabled"
     | "oauth"
-    | "oauth_cancelled"
-    | "unauthorized",
+    | "oauth_cancelled",
   nextPath: string,
 ) {
   const url = new URL(sourcePage(request), request.url);
   url.searchParams.set("authError", code);
-  url.searchParams.set("next", nextPath);
+  if (nextPath) url.searchParams.set("next", nextPath);
   return noStoreRedirect(url);
 }
 
@@ -54,7 +53,7 @@ function logExchangeFailure(error: unknown) {
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const nextPath = safeDashboardPath(
+  const nextPath = safeWorkspacePath(
     request.cookies.get(OAUTH_NEXT_COOKIE)?.value ?? searchParams.get("next"),
   );
   const providerError = searchParams.get("error");
@@ -78,12 +77,8 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   if (!code) return errorRedirect(request, "oauth", nextPath);
 
-  let supabase: Awaited<ReturnType<typeof createServerSupabaseClient>> | null =
-    null;
-  let sessionEstablished = false;
-
   try {
-    supabase = await createServerSupabaseClient();
+    const supabase = await createServerSupabaseClient();
     const flowId = searchParams.get("sb_flow_id");
     const { error } = await supabase.auth.exchangeCodeForSession(
       code,
@@ -95,32 +90,22 @@ export async function GET(request: NextRequest) {
       return errorRedirect(request, "oauth", nextPath);
     }
 
-    sessionEstablished = true;
-    let admin;
+    let account;
 
     try {
-      admin = await getAdminUser();
+      account = await getAccountUser();
     } catch (error) {
       logExchangeFailure(error);
-      await supabase.auth.signOut({ scope: "local" });
-      return errorRedirect(request, "admin_setup", nextPath);
+      return errorRedirect(request, "account_setup", nextPath);
     }
 
-    if (!admin) {
-      await supabase.auth.signOut({ scope: "local" });
-      return errorRedirect(request, "unauthorized", nextPath);
+    if (!account) {
+      return errorRedirect(request, "oauth", nextPath);
     }
 
-    return noStoreRedirect(new URL(nextPath, request.url));
+    return noStoreRedirect(new URL(authenticatedPath(nextPath, account.isAdmin), request.url));
   } catch (error) {
     logExchangeFailure(error);
-    if (sessionEstablished && supabase) {
-      try {
-        await supabase.auth.signOut({ scope: "local" });
-      } catch (signOutError) {
-        logExchangeFailure(signOutError);
-      }
-    }
     return errorRedirect(request, "oauth", nextPath);
   }
 }

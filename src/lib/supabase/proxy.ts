@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-import { safeDashboardPath } from "@/lib/auth/paths";
+import { safeWorkspacePath } from "@/lib/auth/paths";
 import { getSupabasePublicConfig } from "./env";
 
 function copySessionCookies(source: NextResponse, target: NextResponse) {
@@ -42,11 +42,16 @@ export async function updateSession(request: NextRequest) {
   const { data, error } = await supabase.auth.getClaims();
   const isAuthenticated = !error && Boolean(data?.claims?.sub);
 
-  if (request.nextUrl.pathname.startsWith("/dashboard") && !isAuthenticated) {
+  const protectedPath = safeWorkspacePath(
+    `${request.nextUrl.pathname}${request.nextUrl.search}`,
+  );
+  response.headers.set("Cache-Control", "private, no-store");
+
+  if (protectedPath && !isAuthenticated) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set(
       "next",
-      safeDashboardPath(`${request.nextUrl.pathname}${request.nextUrl.search}`),
+      protectedPath,
     );
 
     const redirectResponse = NextResponse.redirect(loginUrl);
@@ -57,4 +62,3 @@ export async function updateSession(request: NextRequest) {
 
   return response;
 }
-

@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/dashboard/", "/login", "/signup"],
+      disallow: ["/api/", "/account", "/dashboard", "/login", "/signup"],
     },
     sitemap: "https://ennearock.com/sitemap.xml",
     host: "https://ennearock.com",

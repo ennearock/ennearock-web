@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { safeDashboardPath } from "@/lib/auth/paths";
+import { safeWorkspacePath } from "@/lib/auth/paths";
 import { getSupabasePublicConfig } from "@/lib/supabase/env";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
@@ -30,7 +30,7 @@ function errorRedirect(
 ) {
   const url = new URL(sourcePage(request), request.url);
   url.searchParams.set("authError", code);
-  url.searchParams.set("next", nextPath);
+  if (nextPath) url.searchParams.set("next", nextPath);
   return noStoreRedirect(url);
 }
 
@@ -73,7 +73,7 @@ async function googleProviderEnabled() {
 }
 
 export async function GET(request: NextRequest) {
-  const nextPath = safeDashboardPath(request.nextUrl.searchParams.get("next"));
+  const nextPath = safeWorkspacePath(request.nextUrl.searchParams.get("next"));
 
   try {
     const canonicalOrigin = callbackOrigin(request);

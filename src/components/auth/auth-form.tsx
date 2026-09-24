@@ -29,7 +29,7 @@ const initialAuthState: AuthActionState = { message: "", status: "idle" };
 export function AuthForm({
   initialError,
   mode,
-  nextPath = "/dashboard",
+  nextPath = "",
 }: {
   initialError?: string;
   mode: "login" | "signup";
@@ -48,21 +48,21 @@ export function AuthForm({
     <div className="w-full">
       <div className="mb-8">
         <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
-          {isSignup ? "Start your workspace" : "Welcome back"}
+          {isSignup ? "Your client account" : "Welcome back"}
         </p>
         <h2 className="mt-3 text-[34px] font-semibold tracking-[-0.055em] text-ink sm:text-[40px]">
           {isSignup ? "Create your account" : "Sign in to Ennearock"}
         </h2>
         <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
           {isSignup
-            ? "Set up your studio workspace in under two minutes."
-            : "Enter your details to access your workspace."}
+            ? "Create an account to share your project requests and stay in touch with Ennearock."
+            : "Access your client account. Authorized team members can also access the administration."}
         </p>
       </div>
 
       <div>
         <a
-          href={`/auth/google?from=${mode}&next=${encodeURIComponent(nextPath)}`}
+          href={`/auth/google?from=${mode}${nextPath ? `&next=${encodeURIComponent(nextPath)}` : ""}`}
           className="flex h-11 w-full items-center justify-center gap-2 rounded-[12px] border border-[var(--line)] bg-white text-xs font-semibold transition hover:-translate-y-0.5 hover:border-[var(--line)] hover:shadow-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus)]/30"
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
@@ -103,15 +103,15 @@ export function AuthForm({
               <input className={inputClass} name="name" autoComplete="name" placeholder="Alex Morgan" minLength={2} maxLength={80} required />
             </label>
             <label className="text-xs font-semibold text-ink">
-              Studio name
-              <input className={inputClass} name="organization" autoComplete="organization" placeholder="Acme Studio" minLength={2} maxLength={120} required />
+              Company (optional)
+              <input className={inputClass} name="organization" autoComplete="organization" placeholder="Your company" minLength={2} maxLength={120} />
             </label>
           </div>
         ) : null}
 
         <label className="block text-xs font-semibold text-ink">
-          Work email
-          <input className={inputClass} type="email" name="email" autoComplete="email" placeholder="you@studio.com" maxLength={254} required />
+          Email address
+          <input className={inputClass} type="email" name="email" autoComplete="email" placeholder="you@example.com" maxLength={254} required />
         </label>
 
         <label className="block text-xs font-semibold text-ink">
@@ -158,7 +158,7 @@ export function AuthForm({
           {pending ? (
             <><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" /> {isSignup ? "Creating account…" : "Signing in…"}</>
           ) : (
-            <>{isSignup ? "Create my workspace" : "Continue to workspace"}<span className="transition-transform group-hover:translate-x-1">→</span></>
+            <>{isSignup ? "Create my account" : "Sign in"}<span className="transition-transform group-hover:translate-x-1">→</span></>
           )}
         </button>
       </form>
@@ -166,7 +166,7 @@ export function AuthForm({
       {isSignup ? (
         <p className="mt-5 text-center text-[11px] leading-5 text-[var(--muted)]">Email confirmation may be required before your first sign-in.</p>
       ) : (
-        <p className="mt-5 text-center text-[11px] leading-5 text-[var(--muted)]">Admin access is limited to authorized Ennearock accounts.</p>
+        <p className="mt-5 text-center text-[11px] leading-5 text-[var(--muted)]">Client accounts and website administration have separate access permissions.</p>
       )}
     </div>
   );

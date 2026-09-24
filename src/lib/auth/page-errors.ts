@@ -1,4 +1,6 @@
 const AUTH_PAGE_ERRORS: Record<string, string> = {
+  account_setup:
+    "You are signed in, but your account could not be loaded. Please try again or contact Ennearock.",
   admin_setup:
     "Your account is valid, but the admin database is not ready. Apply the Supabase migrations and grant this account the admin role.",
   confirmation:
