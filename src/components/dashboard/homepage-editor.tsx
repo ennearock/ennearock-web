@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useMemo, useState } from "react";
 import { saveHomepageAction } from "@/app/dashboard/actions";
+import { BrandLockup } from "@/components/logo";
 import type {
   PricingPlan,
   ProcessItem,
@@ -114,8 +115,7 @@ function HomepageMiniPreview({ content }: { content: SiteContent }) {
         </div>
       ) : null}
       <div className="flex h-10 items-center border-b border-[#dedbd1] px-4">
-        <span className="grid h-4 w-4 grid-cols-3 gap-px">{Array.from({ length: 9 }, (_, index) => <i className={"rounded-[1px] " + (index === 8 ? "bg-[#c9f26b]" : "bg-[#11130f]")} key={index} />)}</span>
-        <strong className="ml-2 text-[7px] tracking-[-0.04em]">ennearock</strong>
+        <BrandLockup compact name={content.general.brandName} />
         <span className="ml-auto h-4 w-12 rounded-full bg-[#11130f]" />
       </div>
       <div className="relative min-h-[280px] overflow-hidden p-5">

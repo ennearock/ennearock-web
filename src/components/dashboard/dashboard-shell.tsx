@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
+import { BrandLockup } from "@/components/logo";
 import { Icon, type IconName } from "./icon";
 
 export type DashboardIdentity = {
@@ -51,32 +52,7 @@ const navigation: {
 ];
 
 function BrandMark() {
-  return (
-    <span className="inline-flex items-center gap-3">
-      <span
-        aria-hidden="true"
-        className="grid h-9 w-9 grid-cols-3 gap-[3px] rounded-[11px] bg-[#c9f26b] p-[7px]"
-      >
-        {Array.from({ length: 9 }, (_, index) => (
-          <span
-            className={
-              "rounded-[1px] bg-[#11130f] " +
-              (index === 8 ? "translate-x-[2px]" : "")
-            }
-            key={index}
-          />
-        ))}
-      </span>
-      <span>
-        <span className="block text-[18px] font-semibold tracking-[-0.04em] text-white">
-          ennearock
-        </span>
-        <span className="mt-0.5 block font-mono text-[7px] uppercase tracking-[0.19em] text-white/35">
-          Website admin
-        </span>
-      </span>
-    </span>
-  );
+  return <BrandLockup inverse subtitle="Website admin" />;
 }
 
 function getInitials(name: string, email: string) {

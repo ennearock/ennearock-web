@@ -1,38 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-
-function EnnearockLogo({ inverse = false }: { inverse?: boolean }) {
-  return (
-    <span className="inline-flex items-center gap-3">
-      <span
-        className={`grid h-9 w-9 grid-cols-3 gap-[3px] rounded-[11px] p-[7px] ${
-          inverse ? "bg-[#c9f26b]" : "bg-[#11130f]"
-        }`}
-        aria-hidden="true"
-      >
-        {Array.from({ length: 9 }, (_, index) => (
-          <span
-            key={index}
-            className={`rounded-[1px] ${
-              index === 8
-                ? inverse
-                  ? "translate-x-[2px] bg-[#11130f]"
-                  : "translate-x-[2px] bg-[#c9f26b]"
-                : inverse
-                  ? "bg-[#11130f]"
-                  : "bg-white"
-            }`}
-          />
-        ))}
-      </span>
-      <span
-        className={`text-[18px] font-semibold tracking-[-0.04em] ${inverse ? "text-white" : "text-[#11130f]"}`}
-      >
-        ennearock
-      </span>
-    </span>
-  );
-}
+import { BrandLockup } from "@/components/logo";
 
 export function AuthShell({
   children,
@@ -57,7 +25,7 @@ export function AuthShell({
         <div className="pointer-events-none absolute -right-32 top-28 h-[420px] w-[420px] rounded-full bg-[#c9f26b]/20 blur-[110px]" />
 
         <Link href="/" className="relative z-10 w-fit" aria-label="Ennearock home">
-          <EnnearockLogo inverse />
+          <BrandLockup inverse />
         </Link>
 
         <div className="relative z-10 my-auto max-w-xl py-16">
@@ -109,9 +77,9 @@ export function AuthShell({
       </section>
 
       <section className="flex min-h-screen flex-col px-5 py-5 sm:px-8 lg:px-12 xl:px-20">
-        <div className="flex items-center justify-between lg:justify-end">
-          <Link href="/" className="lg:hidden" aria-label="Ennearock home">
-            <EnnearockLogo />
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between lg:justify-end">
+          <Link href="/" className="shrink-0 lg:hidden" aria-label="Ennearock home">
+            <BrandLockup />
           </Link>
           <p className="text-xs text-[#6d7169] sm:text-sm">
             {isSignup ? "Already have a workspace?" : "New to Ennearock?"}{" "}

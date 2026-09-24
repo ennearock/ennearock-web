@@ -25,11 +25,13 @@ export const metadata: Metadata = {
     description: "Strategy, design, and engineering for ambitious digital teams.",
     siteName: "Ennearock",
     type: "website",
+    images: [{ url: "/brand/ennearock-logo.png", width: 1536, height: 1024, alt: "Ennearock" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ennearock — Digital product studio",
     description: "Strategy, design, and engineering for ambitious digital teams.",
+    images: ["/brand/ennearock-logo.png"],
   },
 };
 

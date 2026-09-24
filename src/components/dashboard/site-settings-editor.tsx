@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { saveGeneralAction } from "@/app/dashboard/actions";
+import { BrandLockup } from "@/components/logo";
 import type { GeneralContent } from "@/lib/content";
 import { initialActionState, type ActionState } from "./admin-types";
 import {
@@ -137,8 +138,7 @@ export function SiteSettingsEditor({
         <aside className="space-y-4 xl:sticky xl:top-[90px] xl:self-start">
           <section className="overflow-hidden rounded-[18px] border border-[#dedbd1] bg-[#151813] p-5 text-white">
             <div className="flex items-center gap-3">
-              <span className="grid h-9 w-9 grid-cols-3 gap-[3px] rounded-[11px] bg-[#c9f26b] p-[7px]" aria-hidden="true">{Array.from({ length: 9 }, (_, index) => <span className="rounded-[1px] bg-[#11130f]" key={index} />)}</span>
-              <strong className="text-lg tracking-[-0.045em]">{value.brandName || "ennearock"}</strong>
+              <BrandLockup inverse name={value.brandName || "ennearock"} />
             </div>
             <p className="mt-7 text-[11px] leading-5 text-white/50">{value.brandDescription || "Your studio description"}</p>
             <a className="mt-5 inline-flex items-center gap-2 border-b border-white/30 pb-1 text-[10px] font-semibold text-[#c9f26b]" href={"mailto:" + value.contactEmail}>{value.contactEmail || "hello@example.com"} <Icon className="h-3.5 w-3.5" name="arrow-right" /></a>
